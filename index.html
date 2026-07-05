@@ -37,35 +37,36 @@
 
     <header class="bg-slate-900 text-white py-16 px-6 shadow-md relative z-10">
         <div class="max-w-5xl mx-auto text-center">
-            <h1 class="text-3xl md:text-5xl font-bold mb-4">Circuito General del Medicamento</h1>
+            <h1 class="text-3xl md:text-5xl font-bold mb-4">Circuito General en el Área de Internación</h1>
             <p class="text-slate-300 text-lg md:text-xl max-w-3xl mx-auto">
-                El proceso completo de medicación en el área de internación, desde la indicación terapéutica hasta la
-                administración al paciente.
+                Describe el proceso completo de medicación en el área de internación, desde la indicación terapéutica hasta la administración del medicamento al paciente.
             </p>
         </div>
     </header>
 
     <main class="max-w-4xl mx-auto px-4 md:px-6 py-8 md:py-16 relative">
         <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-slate-800">El Proceso Operativo (Área de Internación)</h2>
-            <p class="text-slate-500 mt-2">Hacé clic en cada área para expandir los detalles.</p>
+            <h2 class="text-3xl font-bold text-slate-800">Proceso Operativo (Área de Internación)</h2>
+            <p class="text-slate-500 mt-2">Hacé clic en cada etapa para visualizar su descripción y los conceptos clave.</p>
         </div>
 
         <div class="absolute left-10 md:left-1/2 top-32 md:top-40 bottom-16 w-1 bg-slate-200 -ml-0.5 z-0"></div>
 
         <div class="space-y-12 relative z-10">
+            <!-- 1. Indicación Médica -->
             <div class="flex flex-row md:flex-row items-start md:items-center justify-between w-full group cursor-pointer gap-6 md:gap-0"
                 onclick="toggleDetails('step1')">
                 <div class="md:w-5/12 flex-1 md:flex-none order-2 md:order-1 text-left md:text-right md:pr-8">
                     <div
                         class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-400 hover:shadow-md transition-all text-left md:text-right">
                         <h3 class="text-xl font-bold text-blue-900 mb-2">1. Indicación Médica</h3>
-                        <p class="text-slate-600 text-sm">El médico evalúa al paciente y registra la decisión
-                            terapéutica en la Historia Clínica.</p>
+                        <p class="text-slate-600 text-sm">El médico evalúa al paciente y registra la indicación terapéutica en la Historia Clínica.</p>
                         <div id="step1" class="expand-content text-left pt-4 border-t border-slate-100">
+                            <h4 class="font-semibold text-slate-700 text-xs mb-2 uppercase tracking-wider">Conceptos clave</h4>
                             <ul class="text-sm text-slate-500 list-disc pl-4 space-y-1">
-                                <li>La indicación no implica entrega inmediata por parte de Farmacia.</li>
-                                <li>El médico no solicita directamente los medicamentos a Farmacia.</li>
+                                <li>La indicación médica no implica el envío automático de un pedido a Farmacia.</li>
+                                <li>El médico prescribe el tratamiento, pero no solicita directamente los medicamentos a Farmacia.</li>
+                                <li>La indicación constituye el punto de partida del circuito de medicación.</li>
                             </ul>
                         </div>
                     </div>
@@ -77,19 +78,20 @@
                 <div class="md:w-5/12 order-3 hidden md:block"></div>
             </div>
 
+            <!-- 2. Planificación (Enfermería) -->
             <div class="flex flex-row md:flex-row items-start md:items-center justify-between w-full group cursor-pointer gap-6 md:gap-0"
                 onclick="toggleDetails('step2')">
                 <div class="md:w-5/12 flex-1 md:flex-none order-2 md:order-3 text-left md:pl-8">
                     <div
                         class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-teal-400 hover:shadow-md transition-all">
                         <h3 class="text-xl font-bold text-teal-900 mb-2">2. Planificación (Enfermería)</h3>
-                        <p class="text-slate-600 text-sm">Se analizan las indicaciones y se organiza la administración:
-                            qué, en qué horario y en qué cantidad.</p>
+                        <p class="text-slate-600 text-sm">Enfermería analiza las indicaciones médicas y planifica la administración, definiendo qué medicamento administrar, en qué horario, por qué vía y en qué cantidad.</p>
                         <div id="step2" class="expand-content pt-4 border-t border-slate-100">
-                            <ul class="text-sm text-slate-500 list-disc pl-4 space-y-1">
-                                <li>Si Enfermería no planifica, Farmacia no sabe qué preparar.</li>
-                                <li>Las cantidades dependen tanto de la indicación como de la planificacion realizada.
-                                </li>
+                            <h4 class="font-semibold text-slate-700 text-xs mb-2 uppercase tracking-wider text-left">Conceptos clave</h4>
+                            <ul class="text-sm text-slate-500 list-disc pl-4 space-y-1 text-left">
+                                <li>La planificación transforma la indicación médica en un plan de administración.</li>
+                                <li>Si la medicación no se planifica, Farmacia no dispone de la información necesaria para preparar las dosis.</li>
+                                <li>Las cantidades requeridas dependen tanto de la indicación médica como de la planificación realizada.</li>
                             </ul>
                         </div>
                     </div>
@@ -101,19 +103,20 @@
                 <div class="md:w-5/12 order-3 md:order-1 hidden md:block"></div>
             </div>
 
+            <!-- 3. Generación del Pedido -->
             <div class="flex flex-row md:flex-row items-start md:items-center justify-between w-full group cursor-pointer gap-6 md:gap-0"
                 onclick="toggleDetails('step3')">
                 <div class="md:w-5/12 flex-1 md:flex-none order-2 md:order-1 text-left md:text-right md:pr-8">
                     <div
                         class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-indigo-400 hover:shadow-md transition-all text-left md:text-right">
                         <h3 class="text-xl font-bold text-indigo-900 mb-2">3. Generación del Pedido</h3>
-                        <p class="text-slate-600 text-sm">El sistema genera el requerimiento formal hacia la Farmacia.
-                        </p>
+                        <p class="text-slate-600 text-sm">A partir de la planificación realizada por Enfermería, el sistema genera el pedido formal dirigido a Farmacia.</p>
                         <div id="step3" class="expand-content text-left pt-4 border-t border-slate-100">
+                            <h4 class="font-semibold text-slate-700 text-xs mb-2 uppercase tracking-wider">Conceptos clave</h4>
                             <ul class="text-sm text-slate-500 list-disc pl-4 space-y-1">
-                                <li>Un pedido representa una acción para Farmacia basada en una necesidad del paciente.
-                                </li>
-                                <li>Sin pedido formal, no hay preparación respaldada.</li>
+                                <li>El pedido representa el requerimiento oficial de medicamentos para un paciente.</li>
+                                <li>Cada pedido se genera sobre la base de una necesidad asistencial previamente planificada.</li>
+                                <li>Sin un pedido formal, Farmacia no puede preparar ni entregar la medicación.</li>
                             </ul>
                         </div>
                     </div>
@@ -125,18 +128,20 @@
                 <div class="md:w-5/12 order-3 hidden md:block"></div>
             </div>
 
+            <!-- 4. Preparación y Entrega (Farmacia) -->
             <div class="flex flex-row md:flex-row items-start md:items-center justify-between w-full group cursor-pointer gap-6 md:gap-0"
                 onclick="toggleDetails('step4')">
                 <div class="md:w-5/12 flex-1 md:flex-none order-2 md:order-3 text-left md:pl-8">
                     <div
                         class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-purple-400 hover:shadow-md transition-all">
-                        <h3 class="text-xl font-bold text-purple-900 mb-2">4. Preparación y Entrega</h3>
-                        <p class="text-slate-600 text-sm">Farmacia procesa el pedido, prepara las dosis y registra la
-                            salida.</p>
+                        <h3 class="text-xl font-bold text-purple-900 mb-2">4. Preparación y Entrega (Farmacia)</h3>
+                        <p class="text-slate-600 text-sm">Farmacia obtiene los pedidos pendientes mediante el proceso de barridos, prepara la medicación solicitada y registra la entrega correspondiente.</p>
                         <div id="step4" class="expand-content pt-4 border-t border-slate-100">
-                            <ul class="text-sm text-slate-500 list-disc pl-4 space-y-1">
-                                <li>"Procesar" significa registrar la preparación y entrega en el sistema.</li>
-                                <li>Esto descuenta el stock físico alineándolo con el informático.</li>
+                            <h4 class="font-semibold text-slate-700 text-xs mb-2 uppercase tracking-wider text-left">Conceptos clave</h4>
+                            <ul class="text-sm text-slate-500 list-disc pl-4 space-y-1 text-left">
+                                <li>Procesar un pedido implica validarlo, preparar la medicación y registrar su entrega en el sistema.</li>
+                                <li>El registro de la entrega actualiza el stock informático y mantiene su correspondencia con el stock físico.</li>
+                                <li>Una vez procesado el pedido, la medicación queda disponible para su administración al paciente.</li>
                             </ul>
                         </div>
                     </div>
@@ -148,14 +153,22 @@
                 <div class="md:w-5/12 order-3 md:order-1 hidden md:block"></div>
             </div>
 
+            <!-- 5. Administración al Paciente -->
             <div class="flex flex-row md:flex-row items-start md:items-center justify-between w-full group cursor-pointer gap-6 md:gap-0"
-                onclick="toggleDetails('step6')">
+                onclick="toggleDetails('step5')">
                 <div class="md:w-5/12 flex-1 md:flex-none order-2 md:order-1 text-left md:text-right md:pr-8">
                     <div
                         class="bg-emerald-50 border-2 border-emerald-500 p-6 rounded-2xl shadow-md text-left md:text-right">
                         <h3 class="text-xl font-bold text-emerald-900 mb-2">5. Administración al Paciente</h3>
-                        <p class="text-emerald-800 text-sm font-medium">Enfermería administra la medicación al paciente
-                            según lo planificado.</p>
+                        <p class="text-emerald-800 text-sm font-medium">Enfermería administra la medicación al paciente de acuerdo con la planificación establecida y registra la administración cuando corresponde.</p>
+                        <div id="step5" class="expand-content text-left pt-4 border-t border-emerald-200">
+                            <h4 class="font-semibold text-emerald-800 text-xs mb-2 uppercase tracking-wider">Conceptos clave</h4>
+                            <ul class="text-sm text-emerald-800/80 list-disc pl-4 space-y-1">
+                                <li>La administración constituye la última etapa del circuito de medicación.</li>
+                                <li>La medicación administrada debe corresponder con la planificación realizada y con la medicación entregada por Farmacia.</li>
+                                <li>El registro de la administración permite mantener la trazabilidad completa del circuito.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div
