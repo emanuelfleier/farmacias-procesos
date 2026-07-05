@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procesamiento de Pedidos - IPAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Outfit', sans-serif;
+        }
+        .expand-content {
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            margin-top: 0;
+        }
+        .expanded {
+            max-height: 800px;
+            opacity: 1;
+            margin-top: 1rem;
+        }
+        .rotate-icon {
+            transition: transform 0.3s ease;
+        }
+        .expanded-card .rotate-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-slate-900 text-white py-16 px-6 shadow-md text-center">
+        <div class="max-w-5xl mx-auto">
+            <span class="px-3 py-1 bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded-full text-xs font-semibold uppercase tracking-wider">Documentación Interna</span>
+            <h1 class="text-3xl md:text-5xl font-bold mt-4 mb-4">Procesamiento de Pedidos en el Área de Internación</h1>
+            <p class="text-slate-350 text-lg md:text-xl max-w-3xl mx-auto">
+                Guía conceptual del flujo operativo e informático dentro de la Farmacia Central para el surtido seguro de recetas.
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-4xl w-full mx-auto px-4 md:px-6 py-8 md:py-16 relative">
+        
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-slate-850">Circuito de Procesamiento de Pedidos</h2>
+            <p class="text-slate-500 mt-2">Hacé clic en cada etapa para visualizar su descripción y los conceptos clave de seguridad.</p>
+        </div>
+
+        <!-- Vertical Line for Timeline -->
+        <div class="absolute left-10 md:left-1/2 top-32 md:top-40 bottom-16 w-1 bg-slate-200 -ml-0.5 z-0"></div>
+
+        <div class="space-y-12 relative z-10">
+
+            <!-- 1. Recepción y Clasificación -->
+            <div class="flex flex-row md:flex-row items-start md:items-center justify-between w-full group cursor-pointer gap-6 md:gap-0" onclick="toggleDetails('step1')">
+                <div class="md:w-5/12 flex-1 md:flex-none order-2 md:order-1 text-left md:text-right md:pr-8">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-indigo-400 hover:shadow-md transition-all text-left md:text-right">
+                        <h3 class="text-xl font-bold text-indigo-950 mb-2">1. Recepción y Clasificación</h3>
+                        <p class="text-slate-600 text-sm">Los pedidos ingresan automáticamente al sistema de Farmacia en tiempo real una vez que Enfermería guarda la planificación.</p>
+                        <div id="step1" class="expand-content text-left pt-4 border-t border-slate-100">
+                            <h4 class="font-semibold text-slate-700 text-xs mb-2 uppercase tracking-wider">Conceptos clave</h4>
+                            <ul class="text-sm text-slate-500 list-disc pl-4 space-y-1">
+                                <li><strong>Automatización</strong>: No requiere transcripción manual; el sistema traduce la planificación horaria de enfermería en requerimientos de stock.</li>
+                                <li><strong>Triaje de Urgencia</strong>: Los pedidos se clasifican automáticamente entre Rutina (para el próximo barrido) y Urgencias (prioridad de despacho inmediato).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2 w-12 h-12 bg-indigo-650 rounded-full flex items-center justify-center shadow-lg border-4 border-white shrink-0 z-10">
+                    <i data-lucide="bell" class="text-white w-5 h-5"></i>
+                </div>
+                <div class="md:w-5/12 order-3 hidden md:block"></div>
+            </div>
+
+            <!-- 2. Validación Farmacéutica -->
+            <div class="flex flex-row md:flex-row items-start md:items-center justify-between w-full group cursor-pointer gap-6 md:gap-0" onclick="toggleDetails('step2')">
+                <div class="md:w-5/12 flex-1 md:flex-none order-2 md:order-3 text-left md:pl-8">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-amber-400 hover:shadow-md transition-all">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">2. Validación Farmacéutica</h3>
+                        <p class="text-slate-600 text-sm">El farmacéutico evalúa el pedido confrontando la prescripción con el perfil clínico del paciente antes de autorizar la dispensación.</p>
+                        <div id="step2" class="expand-content pt-4 border-t border-slate-100 text-left">
+                            <h4 class="font-semibold text-slate-700 text-xs mb-2 uppercase tracking-wider">Conceptos clave</h4>
+                            <ul class="text-sm text-slate-500 list-disc pl-4 space-y-1">
+                                <li><strong>Control de Alergias e Interacciones</strong>: Se verifican alertas del sistema sobre contraindicaciones cruzadas o alergias declaradas (ej. Penicilina).</li>
+                                <li><strong>Aprobación Bajo Supervisión</strong>: Si se detecta una alerta pero el beneficio clínico supera el riesgo, se requiere una justificación (override) registrada formalmente.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2 w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center shadow-lg border-4 border-white shrink-0 z-10">
+                    <i data-lucide="shield-alert" class="text-white w-5 h-5"></i>
+                </div>
+                <div class="md:w-5/12 order-3 md:order-1 hidden md:block"></div>
+            </div>
+
+            <!-- 3. Consolidación (Barrido Horario) -->
+            <div class="flex flex-row md:flex-row items-start md:items-center justify-between w-full group cursor-pointer gap-6 md:gap-0" onclick="toggleDetails('step3')">
+                <div class="md:w-5/12 flex-1 md:flex-none order-2 md:order-1 text-left md:text-right md:pr-8">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-pink-400 hover:shadow-md transition-all text-left md:text-right">
+                        <h3 class="text-xl font-bold text-pink-950 mb-2">3. Consolidación (Barrido Horario)</h3>
+                        <p class="text-slate-600 text-sm">Farmacia define los rangos de horarios a preparar para consolidar múltiples pedidos de un mismo sector en un único lote de trabajo.</p>
+                        <div id="step3" class="expand-content text-left pt-4 border-t border-slate-100">
+                            <h4 class="font-semibold text-slate-700 text-xs mb-2 uppercase tracking-wider">Conceptos clave</h4>
+                            <ul class="text-sm text-slate-500 list-disc pl-4 space-y-1">
+                                <li><strong>Optimización Logística</strong>: En lugar de preparar medicamento por medicamento, se agrupan las dosis que deben administrarse en una misma franja horaria (ej: Turno Mañana 08:00 - 12:00 hs).</li>
+                                <li><strong>Eficiencia de Tiempos</strong>: Permite reducir la cantidad de viajes del personal de farmacia y enfermería.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2 w-12 h-12 bg-pink-500 rounded-full flex items-center justify-center shadow-lg border-4 border-white shrink-0 z-10">
+                    <i data-lucide="git-merge" class="text-white w-5 h-5"></i>
+                </div>
+                <div class="md:w-5/12 order-3 hidden md:block"></div>
+            </div>
+
+            <!-- 4. Fraccionamiento y Dosis Unitaria -->
+            <div class="flex flex-row md:flex-row items-start md:items-center justify-between w-full group cursor-pointer gap-6 md:gap-0" onclick="toggleDetails('step4')">
+                <div class="md:w-5/12 flex-1 md:flex-none order-2 md:order-3 text-left md:pl-8">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-purple-400 hover:shadow-md transition-all">
+                        <h3 class="text-xl font-bold text-purple-950 mb-2">4. Fraccionamiento y Dosis Unitaria</h3>
+                        <p class="text-slate-600 text-sm">Los medicamentos son fraccionados y reenvasados en bolsas individuales herméticas debidamente identificadas.</p>
+                        <div id="step4" class="expand-content pt-4 border-t border-slate-100 text-left">
+                            <h4 class="font-semibold text-slate-700 text-xs mb-2 uppercase tracking-wider">Conceptos clave</h4>
+                            <ul class="text-sm text-slate-500 list-disc pl-4 space-y-1">
+                                <li><strong>Trazabilidad por QR/Código de Barras</strong>: Cada bolsa unitaria se rotula con un código único que contiene: nombre del paciente, cama, fármaco, lote de origen y fecha de vencimiento.</li>
+                                <li><strong>Disminución de Errores</strong>: Garantiza que la enfermera reciba exactamente la dosis a administrar en el pie de cama, evitando manipulación adicional.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2 w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center shadow-lg border-4 border-white shrink-0 z-10">
+                    <i data-lucide="printer" class="text-white w-5 h-5"></i>
+                </div>
+                <div class="md:w-5/12 order-3 md:order-1 hidden md:block"></div>
+            </div>
+
+            <!-- 5. Control de Calidad y Despacho -->
+            <div class="flex flex-row md:flex-row items-start md:items-center justify-between w-full group cursor-pointer gap-6 md:gap-0" onclick="toggleDetails('step5')">
+                <div class="md:w-5/12 flex-1 md:flex-none order-2 md:order-1 text-left md:text-right md:pr-8">
+                    <div class="bg-emerald-50 border-2 border-emerald-500 p-6 rounded-2xl shadow-md text-left md:text-right">
+                        <h3 class="text-xl font-bold text-emerald-900 mb-2">5. Control de Calidad y Despacho</h3>
+                        <p class="text-emerald-800 text-sm font-medium">Se realiza un control de doble firma/lectura óptica de las dosis unitarias antes de cargarlas en los carros de distribución.</p>
+                        <div id="step5" class="expand-content text-left pt-4 border-t border-emerald-200">
+                            <h4 class="font-semibold text-emerald-800 text-xs mb-2 uppercase tracking-wider">Conceptos clave</h4>
+                            <ul class="text-sm text-emerald-800/80 list-disc pl-4 space-y-1">
+                                <li><strong>Control de Cierre</strong>: Ningún medicamento sale de Farmacia sin haber sido escaneado físicamente en la mesa de despacho, asegurando que coincida plenamente con el sistema.</li>
+                                <li><strong>Entrega Logística Protegida</strong>: Los carros se cierran herméticamente y se transportan por ascensor de servicio para evitar pérdidas o contaminación.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2 w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center shadow-lg border-4 border-white shrink-0 z-10">
+                    <i data-lucide="truck" class="text-white w-5 h-5"></i>
+                </div>
+                <div class="md:w-5/12 order-3 hidden md:block"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Reflexion Questions Section -->
+    <section class="bg-slate-100 py-16 px-6 border-t border-slate-200">
+        <div class="max-w-4xl mx-auto">
+            
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-slate-800">Preguntas de Análisis y Reflexión (Pedidos)</h2>
+                <p class="text-slate-500 mt-2">Preguntas clave para el análisis del procesamiento de pedidos en Farmacia.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow animate-fade-in" onclick="toggleReflexion('ref1', this)">
+                    <div class="p-6 flex items-center justify-between bg-indigo-50/50">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="help-circle" class="text-indigo-650 w-5 h-5"></i>
+                            <span class="font-bold text-slate-800 text-sm">Validación vs Automatización</span>
+                        </div>
+                        <i data-lucide="chevron-down" class="text-slate-400 rotate-icon w-4 h-4"></i>
+                    </div>
+                    <div id="ref1" class="expand-content px-6 pb-6 text-xs text-slate-650 border-t border-slate-100">
+                        <ul class="list-disc pl-4 space-y-2 pt-4">
+                            <li>Si el pedido se genera automáticamente, ¿por qué sigue siendo obligatoria la validación por parte del farmacéutico?</li>
+                            <li>¿Qué riesgos clínicos se previenen en esta etapa crítica?</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow animate-fade-in" onclick="toggleReflexion('ref2', this)">
+                    <div class="p-6 flex items-center justify-between bg-amber-50/50">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="help-circle" class="text-amber-600 w-5 h-5"></i>
+                            <span class="font-bold text-slate-800 text-sm">El impacto del Barrido Horario</span>
+                        </div>
+                        <i data-lucide="chevron-down" class="text-slate-400 rotate-icon w-4 h-4"></i>
+                    </div>
+                    <div id="ref2" class="expand-content px-6 pb-6 text-xs text-slate-655 border-t border-slate-100">
+                        <ul class="list-disc pl-4 space-y-2 pt-4">
+                            <li>¿Por qué la Farmacia define el rango de horarios para el barrido en lugar de preparar los medicamentos a demanda según van llegando?</li>
+                            <li>¿Cómo afecta esto la carga de trabajo en el laboratorio de fraccionamiento?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-10 px-6 text-center text-sm border-t border-slate-800 mt-auto">
+        <div class="max-w-4xl mx-auto space-y-3">
+            <p class="font-medium text-slate-350">Documentación Interna - IPAM</p>
+            <p class="text-xs text-slate-500">
+                <span class="font-semibold text-slate-450">Autor:</span> Emanuel Fleier
+                <span class="mx-2 text-slate-850">|</span>
+                <span class="font-semibold text-slate-450">Desarrollado con:</span> Emilia Reposi (Farmacéutica), Liliana Ponti (Lic. Enfermería) y Gabriel González (Director Médico)
+            </p>
+            <div class="flex justify-center items-center gap-4 pt-2 text-xs text-slate-600">
+                <span>Fecha de creación: Marzo 2024</span>
+                <span class="text-slate-800">•</span>
+                <span>Versión: v453</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        function toggleDetails(id) {
+            const element = document.getElementById(id);
+            if (element.classList.contains('expanded')) {
+                element.classList.remove('expanded');
+            } else {
+                element.classList.add('expanded');
+            }
+        }
+
+        function toggleReflexion(id, cardElement) {
+            const element = document.getElementById(id);
+            if (element.classList.contains('expanded')) {
+                element.classList.remove('expanded');
+                cardElement.classList.remove('expanded-card');
+            } else {
+                element.classList.add('expanded');
+                cardElement.classList.add('expanded-card');
+            }
+        }
+    </script>
+</body>
+
+</html>
