@@ -23,6 +23,10 @@
             box-shadow: 0 0 20px rgba(20, 184, 166, 0.5);
             border-color: rgba(20, 184, 166, 0.8);
         }
+        .glow-indigo {
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+            border-color: rgba(99, 102, 241, 0.8);
+        }
         .glow-purple {
             box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
             border-color: rgba(168, 85, 247, 0.8);
@@ -66,7 +70,7 @@
                 </div>
                 <div>
                     <h1 class="text-xl font-bold text-white tracking-wide">Simulador Interactivo de Internación</h1>
-                    <p class="text-xs text-slate-400">IPAM - Circuito Real y Animado del Medicamento</p>
+                    <p class="text-xs text-slate-400">IPAM - Circuito de 5 Etapas del Medicamento</p>
                 </div>
             </div>
             <div class="flex items-center gap-4">
@@ -89,7 +93,7 @@
                 <div>
                     <h2 class="text-sm font-bold text-white flex items-center gap-2">
                         <i data-lucide="building-2" class="text-blue-500 w-4 h-4"></i>
-                        Sanatorio IPAM (5 Pisos)
+                        Sanatorio IPAM (3º Piso Internación)
                     </h2>
                 </div>
 
@@ -103,50 +107,59 @@
             </div>
 
             <!-- Graphic Animated Area Map -->
-            <div class="bg-slate-950 border border-slate-800 p-4 rounded-3xl relative overflow-hidden flex-1 min-h-[360px] flex flex-col justify-between">
+            <div class="bg-slate-950 border border-slate-800 p-4 rounded-3xl relative overflow-hidden flex-1 min-h-[380px] flex flex-col justify-between">
                 <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(30,41,59,0.3)_0%,rgba(15,23,42,0.9)_100%)] z-0"></div>
                 
                 <div class="relative z-10 flex justify-between items-center border-b border-slate-800/60 pb-2">
                     <span class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
                         <i data-lucide="eye" class="w-3.5 h-3.5 text-blue-500"></i>
-                        Mapa de Procesos en Tiempo Real
+                        Simulación de Procesos Física y Digital
                     </span>
-                    <span id="map-status-badge" class="text-[9px] px-2 py-0.5 rounded-full bg-blue-900/30 text-blue-400 border border-blue-800 font-mono">Paso 1: Prescripción</span>
+                    <span id="map-status-badge" class="text-[9px] px-2 py-0.5 rounded-full bg-blue-900/30 text-blue-400 border border-blue-800 font-mono">Paso 1: Indicación</span>
                 </div>
 
-                <!-- Interactive SVG Map -->
-                <div class="relative w-full flex-1 min-h-[280px] z-10 my-4">
+                <!-- Interactive Map Grid Layout -->
+                <div class="relative w-full flex-1 min-h-[300px] z-10 my-4">
                     
-                    <!-- Nodes (Absolute Positions) -->
+                    <!-- Circular Nodes (Hospital Departments) -->
                     
-                    <!-- Farmacia (Bottom Left) -->
-                    <div id="node-farmacia" class="absolute left-4 bottom-4 w-28 p-3 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all">
-                        <div class="w-9 h-9 rounded-xl bg-purple-650/20 text-purple-400 flex items-center justify-center">
-                            <i data-lucide="package-check" class="w-5 h-5"></i>
+                    <!-- 1. Sistema Informático / Servidor (Top Left) -->
+                    <div id="node-sistema" class="absolute left-4 top-4 w-28 p-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all">
+                        <div class="w-8 h-8 rounded-xl bg-indigo-900/20 text-indigo-400 flex items-center justify-center">
+                            <i data-lucide="database" class="w-4.5 h-4.5"></i>
                         </div>
-                        <span class="text-[10px] font-bold text-slate-200">Farmacia Central</span>
-                        <span id="node-farmacia-status" class="text-[8px] text-slate-500">En espera...</span>
+                        <span class="text-[9px] font-bold text-slate-200">Servidor Central</span>
+                        <span id="node-sistema-status" class="text-[7.5px] text-slate-500">Esperando receta...</span>
                     </div>
 
-                    <!-- Office de Enfermería (Center) -->
-                    <div id="node-enfermeria" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-32 p-3 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all">
-                        <div class="w-9 h-9 rounded-xl bg-teal-650/20 text-teal-400 flex items-center justify-center">
-                            <i data-lucide="clipboard-list" class="w-5 h-5"></i>
+                    <!-- 2. Habitación 304 (Top Right) -->
+                    <div id="node-hab304" class="absolute right-4 top-4 w-28 p-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all">
+                        <div class="w-8 h-8 rounded-xl bg-blue-900/20 text-blue-400 flex items-center justify-center">
+                            <i data-lucide="bed-double" class="w-4.5 h-4.5"></i>
                         </div>
-                        <span class="text-[10px] font-bold text-slate-200">Office Enfermería</span>
-                        <span id="node-enfermeria-status" class="text-[8px] text-slate-500">En espera...</span>
+                        <span class="text-[9px] font-bold text-slate-200">Habitación 304</span>
+                        <span id="node-hab-status" class="text-[7.5px] text-blue-400 font-medium">Médico en Cama</span>
                     </div>
 
-                    <!-- Habitación 304 (Top Right) -->
-                    <div id="node-hab304" class="absolute right-4 top-4 w-32 p-3 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all">
-                        <div class="w-9 h-9 rounded-xl bg-blue-650/20 text-blue-400 flex items-center justify-center">
-                            <i data-lucide="bed-double" class="w-5 h-5"></i>
+                    <!-- 3. Office de Enfermería (Bottom Right) -->
+                    <div id="node-enfermeria" class="absolute right-4 bottom-4 w-28 p-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all">
+                        <div class="w-8 h-8 rounded-xl bg-teal-900/20 text-teal-400 flex items-center justify-center">
+                            <i data-lucide="clipboard-list" class="w-4.5 h-4.5"></i>
                         </div>
-                        <span class="text-[10px] font-bold text-slate-200">Habitación 304</span>
-                        <span id="node-hab-status" class="text-[8px] text-blue-400 font-medium">Médico en Hab.</span>
+                        <span class="text-[9px] font-bold text-slate-200">Office Enfermería</span>
+                        <span id="node-enfermeria-status" class="text-[7.5px] text-slate-500">En espera...</span>
                     </div>
 
-                    <!-- Floating Animated Data Packet -->
+                    <!-- 4. Farmacia Central (Bottom Left) -->
+                    <div id="node-farmacia" class="absolute left-4 bottom-4 w-28 p-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all">
+                        <div class="w-8 h-8 rounded-xl bg-purple-900/20 text-purple-400 flex items-center justify-center">
+                            <i data-lucide="package-check" class="w-4.5 h-4.5"></i>
+                        </div>
+                        <span class="text-[9px] font-bold text-slate-200">Farmacia Central</span>
+                        <span id="node-farmacia-status" class="text-[7.5px] text-slate-500">En espera...</span>
+                    </div>
+
+                    <!-- Floating Animated Data/Medication Packet -->
                     <div id="anim-packet" class="absolute w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg transition-all duration-[1200ms] ease-in-out opacity-0 scale-0 z-20">
                         <i id="anim-packet-icon" data-lucide="file-text" class="w-4 h-4"></i>
                     </div>
@@ -155,9 +168,9 @@
 
                 <!-- Simulation Status Log -->
                 <div class="relative z-10 bg-slate-900/80 border border-slate-850 p-3 rounded-2xl space-y-1">
-                    <span class="block text-[9px] font-bold text-slate-500 uppercase tracking-wider">Bitácora Activa</span>
+                    <span class="block text-[9px] font-bold text-slate-500 uppercase tracking-wider">Bitácora de Circuito</span>
                     <div id="bitacora" class="h-16 overflow-y-auto text-[10px] font-mono text-slate-400 space-y-1">
-                        <p class="text-slate-500">[01:51:12] Cargando entorno animado...</p>
+                        <p class="text-slate-500">[01:57:43] Sistema iniciado. Esperando indicación médica en Hab. 304...</p>
                     </div>
                 </div>
             </div>
@@ -166,33 +179,42 @@
         <!-- Right Column: Control Panel & Interactive Workflow Steps (7 cols) -->
         <section class="lg:col-span-7 space-y-6">
 
-            <!-- Step Progress Indicator -->
-            <div class="bg-slate-950/40 border border-slate-800 p-4 rounded-2xl flex items-center justify-between gap-2 overflow-x-auto">
-                <div id="prog-step1" class="flex items-center gap-2 shrink-0 text-blue-400 font-semibold text-sm">
-                    <span class="w-6 h-6 rounded-full bg-blue-600/20 border border-blue-500 flex items-center justify-center text-xs">1</span>
-                    1. Prescribir
+            <!-- Step Progress Indicator (Exactly 5 steps matching theory guide) -->
+            <div class="bg-slate-950/40 border border-slate-800 p-4 rounded-2xl flex items-center justify-between gap-1 overflow-x-auto">
+                <div id="prog-step1" class="flex items-center gap-1.5 shrink-0 text-blue-400 font-semibold text-xs">
+                    <span class="w-5.5 h-5.5 rounded-full bg-blue-600/20 border border-blue-500 flex items-center justify-center text-[10px]">1</span>
+                    1. Indicación
                 </div>
-                <div class="h-0.5 w-8 bg-slate-800 shrink-0" id="line-step1"></div>
-                <div id="prog-step2" class="flex items-center gap-2 shrink-0 text-slate-500 font-semibold text-sm">
-                    <span class="w-6 h-6 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-xs">2</span>
-                    2. Planificar
+                <div class="h-0.5 w-4 bg-slate-800 shrink-0" id="line-step1"></div>
+                
+                <div id="prog-step2" class="flex items-center gap-1.5 shrink-0 text-slate-500 font-semibold text-xs">
+                    <span class="w-5.5 h-5.5 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-[10px]">2</span>
+                    2. Planificación
                 </div>
-                <div class="h-0.5 w-8 bg-slate-800 shrink-0" id="line-step2"></div>
-                <div id="prog-step3" class="flex items-center gap-2 shrink-0 text-slate-500 font-semibold text-sm">
-                    <span class="w-6 h-6 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-xs">3</span>
-                    3. Dispensar
+                <div class="h-0.5 w-4 bg-slate-800 shrink-0" id="line-step2"></div>
+
+                <div id="prog-step3" class="flex items-center gap-1.5 shrink-0 text-slate-500 font-semibold text-xs">
+                    <span class="w-5.5 h-5.5 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-[10px]">3</span>
+                    3. Pedido
                 </div>
-                <div class="h-0.5 w-8 bg-slate-800 shrink-0" id="line-step3"></div>
-                <div id="prog-step4" class="flex items-center gap-2 shrink-0 text-slate-500 font-semibold text-sm">
-                    <span class="w-6 h-6 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-xs">4</span>
-                    4. Administrar
+                <div class="h-0.5 w-4 bg-slate-800 shrink-0" id="line-step3"></div>
+
+                <div id="prog-step4" class="flex items-center gap-1.5 shrink-0 text-slate-500 font-semibold text-xs">
+                    <span class="w-5.5 h-5.5 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-[10px]">4</span>
+                    4. Farmacia
+                </div>
+                <div class="h-0.5 w-4 bg-slate-800 shrink-0" id="line-step4"></div>
+
+                <div id="prog-step5" class="flex items-center gap-1.5 shrink-0 text-slate-500 font-semibold text-xs">
+                    <span class="w-5.5 h-5.5 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-[10px]">5</span>
+                    5. Administración
                 </div>
             </div>
 
             <!-- Dynamic Workstation Panel -->
             <div id="workstation-container" class="relative">
 
-                <!-- STEP 1: Medical Prescription Workstation -->
+                <!-- STEP 1: Medical Prescription -->
                 <div id="step-panel-1" class="bg-slate-950 border border-slate-800 rounded-3xl p-6 space-y-6">
                     <div class="flex justify-between items-center">
                         <div class="flex items-center gap-3">
@@ -200,17 +222,17 @@
                                 <i data-lucide="stethoscope" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h3 class="text-md font-bold text-white">Estación del Médico</h3>
-                                <p class="text-xs text-slate-400">Ingreso de indicaciones terapéuticas en Hab. 304</p>
+                                <h3 class="text-md font-bold text-white">Etapa 1: Indicación Médica</h3>
+                                <p class="text-xs text-slate-400">El médico evalúa al paciente y registra la indicación</p>
                             </div>
                         </div>
-                        <span class="text-[10px] px-2.5 py-1 bg-blue-900/30 text-blue-400 border border-blue-800 rounded-full font-mono">Paso 1 de 4</span>
+                        <span class="text-[10px] px-2.5 py-1 bg-blue-900/30 text-blue-400 border border-blue-800 rounded-full font-mono">Piso 3 • Hab 304</span>
                     </div>
 
                     <div class="p-5 bg-slate-900/50 border border-slate-850 rounded-2xl space-y-4">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-xs font-semibold text-slate-400 mb-1.5">Medicamento a Indicar</label>
+                                <label class="block text-xs font-semibold text-slate-400 mb-1.5">Medicamento a Prescribir</label>
                                 <select id="prescription-med" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-white focus:border-blue-500 focus:outline-none">
                                     <option value="Amoxicilina 500mg">Amoxicilina 500 mg (Comprimido)</option>
                                     <option value="Paracetamol 1g">Paracetamol 1 g (Vía Oral)</option>
@@ -227,19 +249,15 @@
                                 </select>
                             </div>
                         </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1.5">Notas Médicas / Diagnóstico</label>
-                            <input type="text" id="prescription-notes" value="Neumonía bacteriana moderada. Monitorear evolución." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-white focus:border-blue-500 focus:outline-none" />
-                        </div>
                     </div>
 
                     <button onclick="submitStep1()" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-900/30">
-                        Enviar Receta a Enfermería
-                        <i data-lucide="send" class="w-4 h-4 animate-bounce"></i>
+                        Registrar Indicación en Historia Clínica
+                        <i data-lucide="save" class="w-4 h-4"></i>
                     </button>
                 </div>
 
-                <!-- STEP 2: Nurse Planning Workstation -->
+                <!-- STEP 2: Nurse Planning -->
                 <div id="step-panel-2" class="bg-slate-950 border border-slate-800 rounded-3xl p-6 space-y-6 step-inactive hidden">
                     <div class="flex justify-between items-center">
                         <div class="flex items-center gap-3">
@@ -247,21 +265,21 @@
                                 <i data-lucide="clipboard-list" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h3 class="text-md font-bold text-white">Estación de Enfermería: Planificación</h3>
-                                <p class="text-xs text-slate-400">Configuración de los horarios para Hab. 304</p>
+                                <h3 class="text-md font-bold text-white">Etapa 2: Planificación (Enfermería)</h3>
+                                <p class="text-xs text-slate-400">Definición de horarios para la administración</p>
                             </div>
                         </div>
-                        <span class="text-[10px] px-2.5 py-1 bg-teal-900/30 text-teal-400 border border-teal-800 rounded-full font-mono">Paso 2 de 4</span>
+                        <span class="text-[10px] px-2.5 py-1 bg-teal-900/30 text-teal-400 border border-teal-800 rounded-full font-mono">Office Enfermería</span>
                     </div>
 
                     <div class="p-5 bg-slate-900/50 border border-slate-850 rounded-2xl space-y-4">
-                        <div class="border-l-4 border-teal-500 bg-teal-950/20 p-3.5 rounded-r-xl">
-                            <span class="block text-[10px] font-bold text-teal-400 uppercase tracking-wider">Receta Recibida</span>
-                            <span id="active-prescription-summary" class="text-xs font-semibold text-white">Cargando receta...</span>
+                        <div class="border-l-4 border-blue-500 bg-blue-950/20 p-3 rounded-r-xl text-xs">
+                            <span class="block font-bold text-blue-400 uppercase tracking-wider text-[9px]">Indicación Activa</span>
+                            <span id="active-prescription-summary" class="text-white font-semibold">Cargando indicación...</span>
                         </div>
 
                         <div>
-                            <span class="block text-xs font-semibold text-slate-400 mb-3">Definir Horarios de Administración (Barrido Horario)</span>
+                            <span class="block text-xs font-semibold text-slate-400 mb-2.5">Marcar Horarios Programados</span>
                             <div class="grid grid-cols-3 gap-2" id="planning-times-container">
                                 <!-- Times checkboxes -->
                             </div>
@@ -269,29 +287,62 @@
                     </div>
 
                     <button onclick="submitStep2()" class="w-full py-3 bg-teal-600 hover:bg-teal-500 text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg">
-                        Guardar Planificación (El sistema generará los pedidos)
-                        <i data-lucide="check-circle" class="w-4 h-4"></i>
+                        Guardar Planificación Horaria
+                        <i data-lucide="calendar" class="w-4 h-4"></i>
                     </button>
                 </div>
 
-                <!-- STEP 3: Pharmacy Workstation -->
+                <!-- STEP 3: Automated Order Generation -->
                 <div id="step-panel-3" class="bg-slate-950 border border-slate-800 rounded-3xl p-6 space-y-6 step-inactive hidden">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-650/10 text-indigo-400 flex items-center justify-center">
+                                <i data-lucide="file-output" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-md font-bold text-white">Etapa 3: Generación del Pedido</h3>
+                                <p class="text-xs text-slate-400">El sistema genera el pedido formal automáticamente</p>
+                            </div>
+                        </div>
+                        <span class="text-[10px] px-2.5 py-1 bg-indigo-900/30 text-indigo-400 border border-indigo-800 rounded-full font-mono">Proceso del Sistema</span>
+                    </div>
+
+                    <div class="p-5 bg-slate-900/50 border border-slate-850 rounded-2xl space-y-4">
+                        <div class="bg-slate-950/60 p-4 rounded-xl font-mono text-xs text-slate-400 space-y-1.5">
+                            <p class="text-emerald-400">✓ [SISTEMA] Planificación leída correctamente</p>
+                            <p class="text-slate-350">⏳ [PROCESO] Generando pedidos asociados a horarios...</p>
+                            <div class="pl-4 text-[11px] text-slate-500 space-y-0.5">
+                                <p>• Pedido #F-9281-A creado para Hab. 304</p>
+                                <p id="pedido-system-detail">Cargando detalle...</p>
+                            </div>
+                            <p class="text-indigo-400">✓ [SISTEMA] Requerimiento formal consolidado en base de datos.</p>
+                        </div>
+                    </div>
+
+                    <button onclick="submitStep3()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg">
+                        Transmitir Pedidos a Cola de Farmacia
+                        <i data-lucide="database" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- STEP 4: Pharmacy Dispensing -->
+                <div id="step-panel-4" class="bg-slate-950 border border-slate-800 rounded-3xl p-6 space-y-6 step-inactive hidden">
                     <div class="flex justify-between items-center">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-xl bg-purple-600/10 text-purple-400 flex items-center justify-center">
                                 <i data-lucide="package-check" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h3 class="text-md font-bold text-white">Estación de Farmacia: Barrido Horario</h3>
-                                <p class="text-xs text-slate-400">Farmacia define el rango de horarios para el despacho</p>
+                                <h3 class="text-md font-bold text-white">Etapa 4: Preparación y Entrega (Farmacia)</h3>
+                                <p class="text-xs text-slate-400">Consolidación por barrido horario y despacho</p>
                             </div>
                         </div>
-                        <span class="text-[10px] px-2.5 py-1 bg-purple-900/30 text-purple-400 border border-purple-800 rounded-full font-mono">Paso 3 de 4</span>
+                        <span class="text-[10px] px-2.5 py-1 bg-purple-900/30 text-purple-400 border border-purple-800 rounded-full font-mono">Farmacia Central</span>
                     </div>
 
                     <div class="p-5 bg-slate-900/50 border border-slate-850 rounded-2xl space-y-4">
                         <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1.5">Definir Rango de Horarios para Barrido</label>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1.5">Establecer Rango de Barrido Horario</label>
                             <select id="pharmacy-barrido" onchange="updateBarridoFilter()" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-white focus:border-purple-500 focus:outline-none">
                                 <option value="08-12">Barrido Mañana (08:00 hs a 12:00 hs)</option>
                                 <option value="12-20">Barrido Tarde (12:00 hs a 20:00 hs)</option>
@@ -300,48 +351,48 @@
                         </div>
 
                         <div class="border-t border-slate-850 pt-3 space-y-2">
-                            <span class="text-[10px] font-bold text-purple-400 uppercase tracking-wider block">Pedidos de Cama 304 Consolidados</span>
+                            <span class="text-[10px] font-bold text-purple-400 uppercase tracking-wider block">Pedidos Consolidados en este Rango</span>
                             <div class="space-y-2 text-xs">
                                 <div class="flex justify-between">
-                                    <span class="text-slate-450">Medicamento:</span>
+                                    <span class="text-slate-400">Medicamento:</span>
                                     <span id="pharmacy-med-name" class="text-white font-medium">-</span>
                                 </div>
                                 <div class="flex justify-between">
-                                    <span class="text-slate-455">Dosis a preparar en este rango:</span>
-                                    <span id="pharmacy-med-hours" class="text-purple-400 font-bold">-</span>
+                                    <span class="text-slate-400">Dosis a preparar:</span>
+                                    <span id="pharmacy-med-hours" class="text-purple-450 font-bold">-</span>
                                 </div>
                                 <span id="barrido-result-msg" class="text-[10px] text-slate-500 mt-1 block"></span>
                             </div>
                         </div>
                     </div>
 
-                    <button id="btn-dispense" onclick="submitStep3()" class="w-full py-3 bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg">
-                        Preparar y Despachar Dosis en Rango
+                    <button id="btn-dispense" onclick="submitStep4()" class="w-full py-3 bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg">
+                        Preparar y Despachar Medicación
                         <i data-lucide="truck" class="w-4 h-4"></i>
                     </button>
                 </div>
 
-                <!-- STEP 4: Nurse Administration Workstation -->
-                <div id="step-panel-4" class="bg-slate-950 border border-slate-800 rounded-3xl p-6 space-y-6 step-inactive hidden">
+                <!-- STEP 5: Nurse Administration -->
+                <div id="step-panel-5" class="bg-slate-950 border border-slate-800 rounded-3xl p-6 space-y-6 step-inactive hidden">
                     <div class="flex justify-between items-center">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-xl bg-emerald-600/10 text-emerald-400 flex items-center justify-center">
                                 <i data-lucide="user-check" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h3 class="text-md font-bold text-white">Estación de Enfermería: Administración</h3>
-                                <p class="text-xs text-slate-400">Verificación al pie de la cama en Hab. 304</p>
+                                <h3 class="text-md font-bold text-white">Etapa 5: Administración al Paciente</h3>
+                                <p class="text-xs text-slate-400">Verificación y registro al pie de cama</p>
                             </div>
                         </div>
-                        <span class="text-[10px] px-2.5 py-1 bg-emerald-900/30 text-emerald-400 border border-emerald-800 rounded-full font-mono">Paso 4 de 4</span>
+                        <span class="text-[10px] px-2.5 py-1 bg-emerald-900/30 text-emerald-400 border border-emerald-800 rounded-full font-mono">Habitación 304</span>
                     </div>
 
                     <div class="p-5 bg-slate-900/50 border border-slate-850 rounded-2xl space-y-4">
-                        <div class="flex justify-between items-center bg-emerald-950/15 border border-emerald-900/40 p-4 rounded-xl">
+                        <div class="flex justify-between items-center bg-emerald-950/15 border border-emerald-900/40 p-4 rounded-xl text-xs">
                             <div class="flex items-center gap-3">
-                                <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400"></i>
+                                <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 animate-pulse"></i>
                                 <div>
-                                    <span class="block text-xs font-bold text-white">Medicación en Office</span>
+                                    <span class="block font-bold text-white">Medicación Entregada por Farmacia</span>
                                     <span id="admin-med-summary" class="text-[11px] text-slate-400">Cargando...</span>
                                 </div>
                             </div>
@@ -350,21 +401,21 @@
                         <div class="space-y-2 text-xs">
                             <div class="flex items-center gap-2 text-slate-400">
                                 <i data-lucide="circle" class="w-3.5 h-3.5 text-emerald-500 fill-emerald-500"></i>
-                                <span>Paciente correcto: Juan Gómez (Hab. 304)</span>
+                                <span>Paciente correcto: Juan Gómez</span>
                             </div>
                             <div class="flex items-center gap-2 text-slate-400">
                                 <i data-lucide="circle" class="w-3.5 h-3.5 text-emerald-500 fill-emerald-500"></i>
-                                <span>Medicación entregada coincide con la receta</span>
+                                <span>Medicación, dosis y vía correcta validada</span>
                             </div>
                             <div class="flex items-center gap-2 text-slate-400">
                                 <i data-lucide="circle" class="w-3.5 h-3.5 text-emerald-500 fill-emerald-500"></i>
-                                <span>Horario y dosis correctos</span>
+                                <span>Registro de administración en sistema completado</span>
                             </div>
                         </div>
                     </div>
 
-                    <button onclick="submitStep4()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg">
-                        Confirmar y Registrar Administración
+                    <button onclick="submitStep5()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg">
+                        Confirmar y Finalizar Administración
                         <i data-lucide="check-square" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -375,8 +426,8 @@
                         <i data-lucide="party-popper" class="w-8 h-8"></i>
                     </div>
                     <div class="space-y-2">
-                        <h3 class="text-xl font-bold text-white">¡Circuito Completado Exitosamente!</h3>
-                        <p class="text-xs text-slate-400 max-w-sm mx-auto">La medicación fue prescrita, planificada, dispensada y administrada de forma correcta garantizando la trazabilidad.</p>
+                        <h3 class="text-xl font-bold text-white">¡Circuito Completado de 5 Etapas!</h3>
+                        <p class="text-xs text-slate-400 max-w-sm mx-auto">La medicación completó exitosamente todas las etapas operativas y de seguridad en el área de internación.</p>
                     </div>
 
                     <div class="p-4 bg-slate-900/60 rounded-xl space-y-2 text-left max-w-md mx-auto text-xs text-slate-300">
@@ -449,7 +500,7 @@
             iconElement.setAttribute("data-lucide", iconName);
             lucide.createIcons();
 
-            // Perform animation frame to ensure transition is triggered
+            // Perform animation frame
             setTimeout(() => {
                 packet.style.left = `${endX}px`;
                 packet.style.top = `${endY}px`;
@@ -467,21 +518,20 @@
         function submitStep1() {
             selectedMed = document.getElementById("prescription-med").value;
             selectedFreq = document.getElementById("prescription-freq").value;
-            notes = document.getElementById("prescription-notes").value;
 
             // Glow nodes to show activity
             document.getElementById("node-hab304").classList.add("glow-blue");
-            document.getElementById("node-hab-status").innerText = "Receta emitida";
+            document.getElementById("node-hab-status").innerText = "Indicación registrada";
 
-            addBitacora(`Médico en Hab. 304 prescribió <strong class="text-blue-400">${selectedMed}</strong>.`);
+            addBitacora(`Médico en Hab. 304 registró indicación de <strong class="text-blue-400">${selectedMed}</strong>.`);
             
-            // Animate packet: Hab 304 -> Office
-            animatePacket("node-hab304", "node-enfermeria", "file-text", "bg-blue-600", () => {
-                document.getElementById("node-enfermeria").classList.add("glow-teal");
-                document.getElementById("node-enfermeria-status").innerText = "Receta recibida";
+            // Animate packet: Hab 304 -> Sistema
+            animatePacket("node-hab304", "node-sistema", "file-text", "bg-blue-600", () => {
+                document.getElementById("node-sistema").classList.add("glow-indigo");
+                document.getElementById("node-sistema-status").innerText = "Receta en H.C.";
                 
                 // Set summary in Step 2
-                document.getElementById("active-prescription-summary").innerText = `${selectedMed} - ${selectedFreq} (Nota: ${notes})`;
+                document.getElementById("active-prescription-summary").innerText = `${selectedMed} - ${selectedFreq}`;
 
                 // Generate administration times checkboxes based on frequency
                 const container = document.getElementById("planning-times-container");
@@ -530,12 +580,31 @@
 
             addBitacora(`Enfermería planificó administración a las: <strong class="text-teal-400">${plannedTimes.join(', ')}</strong>.`);
             
-            // Animate packet: Office -> Farmacia
-            animatePacket("node-enfermeria", "node-farmacia", "clipboard-list", "bg-teal-600", () => {
-                document.getElementById("node-farmacia").classList.add("glow-purple");
-                document.getElementById("node-farmacia-status").innerText = "Pedido Recibido (Automático)";
+            // Animate packet: Office -> Sistema
+            animatePacket("node-enfermeria", "node-sistema", "calendar", "bg-teal-600", () => {
+                document.getElementById("node-sistema-status").innerText = "Planificación guardada";
 
-                addBitacora(`Sistema generó el pedido automáticamente basado en la planificación.`);
+                addBitacora(`Planificación horaria almacenada en el sistema.`);
+                document.getElementById("pedido-system-detail").innerText = `• Dosis programadas: ${plannedTimes.join(', ')}`;
+
+                document.getElementById("map-status-badge").innerText = "Paso 3: Generación de Pedido";
+                document.getElementById("map-status-badge").className = "text-[9px] px-2 py-0.5 rounded-full bg-indigo-900/30 text-indigo-400 border border-indigo-800 font-mono";
+
+                // Transition UI
+                transitionStep(2, 3);
+            });
+        }
+
+        // STEP 3 Submit: Automated Order Generation (System Node)
+        function submitStep3() {
+            addBitacora(`Sistema generó automáticamente pedidos para las dosis del paciente.`);
+
+            // Animate packet: Sistema -> Farmacia
+            animatePacket("node-sistema", "node-farmacia", "file-output", "bg-indigo-650", () => {
+                document.getElementById("node-farmacia").classList.add("glow-purple");
+                document.getElementById("node-farmacia-status").innerText = "Pedidos recibidos";
+
+                addBitacora(`Pedidos consolidados recibidos en la cola de Farmacia.`);
 
                 // Prepare pharmacy panel details
                 document.getElementById("pharmacy-med-name").innerText = selectedMed;
@@ -553,11 +622,11 @@
 
                 updateBarridoFilter();
 
-                document.getElementById("map-status-badge").innerText = "Paso 3: Dispensación";
+                document.getElementById("map-status-badge").innerText = "Paso 4: Preparación y Entrega";
                 document.getElementById("map-status-badge").className = "text-[9px] px-2 py-0.5 rounded-full bg-purple-900/30 text-purple-400 border border-purple-800 font-mono";
 
                 // Transition UI
-                transitionStep(2, 3);
+                transitionStep(3, 4);
             });
         }
 
@@ -584,7 +653,7 @@
             if (filteredTimes.length > 0) {
                 hoursSpan.innerText = filteredTimes.join(", ");
                 hoursSpan.className = "text-purple-400 font-bold";
-                resultMsg.innerText = "✓ Pedidos incluidos en este barrido horario.";
+                resultMsg.innerText = "✓ Pedidos de Enfermería consolidados para este barrido.";
                 resultMsg.className = "text-[10px] text-emerald-400 mt-1 block font-medium";
                 btn.disabled = false;
                 btn.className = "w-full py-3 bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg";
@@ -598,8 +667,8 @@
             }
         }
 
-        // STEP 3 Submit: Pharmacist dispenses
-        function submitStep3() {
+        // STEP 4 Submit: Pharmacist dispenses
+        function submitStep4() {
             const rangeText = document.getElementById("pharmacy-barrido").options[document.getElementById("pharmacy-barrido").selectedIndex].text;
             addBitacora(`Farmacia procesó el barrido de horarios: <strong class="text-purple-400">${rangeText}</strong>.`);
             addBitacora(`Medicamentos fraccionados y despachados al Office de Enfermería.`);
@@ -611,17 +680,17 @@
                 // Set admin panel details
                 document.getElementById("admin-med-summary").innerText = `${selectedMed} (${rangeText})`;
 
-                document.getElementById("map-status-badge").innerText = "Paso 4: Administración";
+                document.getElementById("map-status-badge").innerText = "Paso 5: Administración";
                 document.getElementById("map-status-badge").className = "text-[9px] px-2 py-0.5 rounded-full bg-emerald-900/30 text-emerald-400 border border-emerald-800 font-mono";
 
                 // Transition UI
-                transitionStep(3, 4);
+                transitionStep(4, 5);
             });
         }
 
-        // STEP 4 Submit: Nurse administers to patient
-        function submitStep4() {
-            addBitacora(`Enfermero/a llevó la dosis al pie de cama del paciente.`);
+        // STEP 5 Submit: Nurse administers to patient
+        function submitStep5() {
+            addBitacora(`Enfermero/a llevó la dosis al pie de cama en Habitación 304.`);
 
             // Animate packet: Office -> Hab 304
             animatePacket("node-enfermeria", "node-hab304", "user-check", "bg-emerald-600", () => {
@@ -629,10 +698,10 @@
                 document.getElementById("node-hab-status").innerText = "Medicación Administrada";
 
                 addBitacora(`Paciente correcto y dosis correcta verificado. Medicación administrada.`);
-                addBitacora(`Registro informático y trazabilidad de dosis completados.`);
+                addBitacora(`Trazabilidad completada y registrada en el sistema.`);
 
-                // Hide Step 4, Show Success
-                document.getElementById("step-panel-4").classList.add("hidden");
+                // Hide Step 5, Show Success
+                document.getElementById("step-panel-5").classList.add("hidden");
                 document.getElementById("success-panel").classList.remove("hidden");
 
                 document.getElementById("map-status-badge").innerText = "Completado";
@@ -656,7 +725,7 @@
 
             currentProg.classList.remove("text-blue-400");
             currentProg.classList.add("text-emerald-500");
-            currentProg.querySelector("span").innerHTML = '<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>';
+            currentProg.querySelector("span").innerHTML = '<i data-lucide="check" class="w-3 text-emerald-400"></i>';
             currentProg.querySelector("span").classList.remove("bg-blue-600/20", "border-blue-500");
             currentProg.querySelector("span").classList.add("bg-emerald-600/20", "border-emerald-500");
 
@@ -674,7 +743,6 @@
         }
 
         function restartSimulation() {
-            // Reload page to reset everything
             location.reload();
         }
     </script>
