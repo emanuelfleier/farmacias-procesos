@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Procesamiento de Pedidos - IPAM</title>
+    <title>Operatividad de Pedidos de Internación - IPAM</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -18,23 +18,11 @@
         .tab-content.active {
             display: block;
         }
-        .expand-content {
-            transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            margin-top: 0;
-        }
-        .expanded {
-            max-height: 800px;
-            opacity: 1;
-            margin-top: 1rem;
-        }
-        .rotate-icon {
-            transition: transform 0.3s ease;
-        }
-        .expanded-card .rotate-icon {
-            transform: rotate(180deg);
+        .priority-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 9999px;
+            display: inline-block;
         }
     </style>
 </head>
@@ -44,255 +32,245 @@
     <!-- Header -->
     <header class="bg-slate-900 text-white py-12 px-6 shadow-md text-center">
         <div class="max-w-5xl mx-auto">
-            <span class="px-3 py-1 bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded-full text-xs font-semibold uppercase tracking-wider">Documentación de Procesos - IPAM</span>
-            <h1 class="text-3xl md:text-5xl font-bold mt-4 mb-4">Procesamiento de Pedidos de Internación</h1>
+            <span class="px-3 py-1 bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded-full text-xs font-semibold uppercase tracking-wider">Documentación de Sistemas - IPAM</span>
+            <h1 class="text-3xl md:text-5xl font-bold mt-4 mb-4">Operatividad de los Pedidos de Internación</h1>
             <p class="text-slate-350 text-sm md:text-base max-w-3xl mx-auto">
-                Guía oficial y cronograma de barridos horarios para la gestión del stock en el Sistema Algoritmo.
+                Guía completa sobre el circuito operativo en la Consola de Operaciones de Farmacia dentro del Sistema Algoritmo.
             </p>
         </div>
     </header>
 
     <!-- Navigation Tabs -->
     <div class="bg-white border-b border-slate-200 sticky top-0 z-40">
-        <div class="max-w-4xl mx-auto px-4 flex gap-6">
-            <button onclick="switchTab('poe')" id="tab-poe" class="py-4 text-sm font-semibold border-b-2 border-indigo-600 text-indigo-600 transition-all flex items-center gap-2">
-                <i data-lucide="list-checks" class="w-4 h-4"></i>
-                P.O.E. Algoritmo
+        <div class="max-w-5xl mx-auto px-4 flex gap-6 overflow-x-auto">
+            <button onclick="switchTab('general')" id="tab-general" class="py-4 text-sm font-semibold border-b-2 border-indigo-600 text-indigo-600 transition-all flex items-center gap-2 shrink-0">
+                <i data-lucide="info" class="w-4 h-4"></i>
+                1. Visión General & Acceso
             </button>
-            <button onclick="switchTab('barridos')" id="tab-barridos" class="py-4 text-sm font-medium border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition-all flex items-center gap-2">
-                <i data-lucide="clock" class="w-4 h-4"></i>
-                Barridos y Horarios
+            <button onclick="switchTab('tipos')" id="tab-tipos" class="py-4 text-sm font-medium border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition-all flex items-center gap-2 shrink-0">
+                <i data-lucide="git-branch" class="w-4 h-4"></i>
+                2. Tipos de Pedido & Filtros
             </button>
-            <button onclick="switchTab('reflexion')" id="tab-reflexion" class="py-4 text-sm font-medium border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition-all flex items-center gap-2">
-                <i data-lucide="help-circle" class="w-4 h-4"></i>
-                Análisis Operativo
+            <button onclick="switchTab('bandeja')" id="tab-bandeja" class="py-4 text-sm font-medium border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition-all flex items-center gap-2 shrink-0">
+                <i data-lucide="columns" class="w-4 h-4"></i>
+                3. Bandeja de Entrada & Prioridades
             </button>
         </div>
     </div>
 
     <!-- Main Content -->
-    <main class="flex-1 max-w-4xl w-full mx-auto px-4 md:px-6 py-8 md:py-12">
+    <main class="flex-1 max-w-5xl w-full mx-auto px-4 md:px-6 py-8 md:py-12">
 
-        <!-- TAB 1: POE ALGORITMO -->
-        <section id="content-poe" class="tab-content active space-y-8">
-            <div class="bg-indigo-50/50 border border-indigo-100 p-5 rounded-2xl flex gap-3.5 items-start">
-                <i data-lucide="info" class="text-indigo-600 w-5.5 h-5.5 shrink-0 mt-0.5"></i>
-                <div class="text-xs md:text-sm text-indigo-950 space-y-1">
-                    <p class="font-bold">Objetivo de la P.O.E.</p>
-                    <p class="text-indigo-900/80 leading-relaxed">Asegurar la entrega correcta y oportuna de los productos farmacéuticos y dispositivos médicos por el sector de farmacia, como respuesta al pedido para los pacientes internados del 1ro al 5to piso.</p>
+        <!-- TAB 1: VISION GENERAL & ACCESO -->
+        <section id="content-general" class="tab-content active space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Objetivo -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                        <i data-lucide="target" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-base">Objetivo del Proceso</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Describir el circuito operativo mediante el cual el sector de Farmacia recibe, procesa y entrega medicamentos e insumos médicos destinados a pacientes internados, garantizando una dispensación correcta, oportuna y trazable.
+                    </p>
+                </div>
+
+                <!-- Alcance -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                        <i data-lucide="zoom-in" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-base">Alcance del Procedimiento</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Este procedimiento aplica de manera directa a la interacción operativa y lógica entre el sector de <strong>Farmacia</strong> y los <strong>Pisos de Internación (del 1.º al 5.º piso)</strong> del sanatorio IPAM.
+                    </p>
                 </div>
             </div>
 
-            <!-- Steps timeline -->
-            <div class="space-y-6">
-                <h3 class="text-lg font-bold text-slate-850 flex items-center gap-2 border-b border-slate-200 pb-2">
-                    <i data-lucide="laptop" class="text-indigo-650 w-5 h-5"></i>
-                    Paso a Paso en Sistema Algoritmo
-                </h3>
+            <!-- Acceso a la Consola de Operaciones -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 space-y-6">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900">Acceso a la Consola de Operaciones</h3>
+                    <p class="text-xs text-slate-500 mt-1">El ingreso al módulo informático se realiza mediante los siguientes pasos dentro del Sistema Algoritmo:</p>
+                </div>
 
-                <!-- Timeline Items -->
-                <div class="relative pl-6 border-l-2 border-slate-200 space-y-6">
-                    <!-- Step 1 -->
-                    <div class="relative">
-                        <span class="absolute -left-[31px] top-0.5 w-4.5 h-4.5 bg-indigo-600 rounded-full border-4 border-white"></span>
-                        <div class="space-y-1">
-                            <h4 class="text-sm font-bold text-slate-850">1. Acceso y Navegación Básica</h4>
-                            <p class="text-xs text-slate-550">Ingresar al sistema <strong>Algoritmo</strong> con contraseña personal, luego dirigirse a la pestaña <strong>GESTIÓN SANATORIAL</strong> -> opción <strong>FARMACIA</strong> -> <strong>CONSOLA DE OPERACIONES</strong> -> seleccionar <strong>BANDEJA DE ENTRADA</strong>.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+                        <div class="flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-slate-900 text-white flex items-center justify-center text-xs font-bold font-mono">1</span>
+                            <span class="font-bold text-slate-800 text-xs">Paso 1: Autenticación</span>
                         </div>
+                        <p class="text-[11px] text-slate-600">Ingresar al sistema <strong>Algoritmo</strong> utilizando el usuario y contraseña personal asignado.</p>
                     </div>
 
-                    <!-- Step 2 -->
-                    <div class="relative">
-                        <span class="absolute -left-[31px] top-0.5 w-4.5 h-4.5 bg-indigo-600 rounded-full border-4 border-white"></span>
-                        <div class="space-y-1">
-                            <h4 class="text-sm font-bold text-slate-850">2. Configuración y Generación de Pedidos</h4>
-                            <p class="text-xs text-slate-550">Seleccionar la pestaña <strong>GENERAR PEDIDO</strong>. Definir el <strong>SECTOR</strong> (ej: Internación 3er piso) y configurar el rango de horario del barrido correspondiente:</p>
-                            <div class="p-3 bg-slate-100 rounded-xl font-mono text-[11px] text-slate-700 w-fit">
-                                Fecha/hora desde: [Día Actual] / 12:00 hs<br>
-                                Fecha/hora hasta: [Día Siguiente] / 11:00 hs
-                            </div>
-                            <p class="text-xs text-slate-550">Una vez parametrizado, presionar el botón <strong>GENERAR</strong>.</p>
+                    <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+                        <div class="flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-slate-900 text-white flex items-center justify-center text-xs font-bold font-mono">2</span>
+                            <span class="font-bold text-slate-800 text-xs">Paso 2: Ruta de Acceso</span>
                         </div>
-                    </div>
-
-                    <!-- Step 3 -->
-                    <div class="relative">
-                        <span class="absolute -left-[31px] top-0.5 w-4.5 h-4.5 bg-indigo-600 rounded-full border-4 border-white"></span>
-                        <div class="space-y-1">
-                            <h4 class="text-sm font-bold text-slate-850">3. Visualización e Impresión</h4>
-                            <p class="text-xs text-slate-550">Regresar a la <strong>BANDEJA DE ENTRADA</strong>. En el campo <strong>DESTINO</strong> elegir el piso/sector y presionar <strong>OBTENER</strong>. Aparecerá la indicación diaria de todos los pacientes. Hacer clic derecho sobre cada paciente y seleccionar <strong>IMPRIMIR</strong> (generar 2 copias: 1 para archivo de farmacia, 1 para enviar junto con el pedido físico).</p>
-                        </div>
-                    </div>
-
-                    <!-- Step 4 -->
-                    <div class="relative">
-                        <span class="absolute -left-[31px] top-0.5 w-4.5 h-4.5 bg-indigo-600 rounded-full border-4 border-white"></span>
-                        <div class="space-y-1">
-                            <h4 class="text-sm font-bold text-slate-850">4. Edición y Procesamiento de Productos</h4>
-                            <p class="text-xs text-slate-550">Una vez armado el pedido físico, hacer clic derecho sobre el paciente y elegir <strong>PROCESAR</strong>. El sistema permite realizar tres tipos de modificaciones de stock:</p>
-                            
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2">
-                                <div class="p-3 bg-red-50 border border-red-100 rounded-xl space-y-1 text-xs">
-                                    <span class="font-bold text-red-700 block">Restar (-)</span>
-                                    <p class="text-red-900/80 text-[11px]">Restar unidades si no se dispone de stock total. Los productos restantes quedarán registrados en <strong>deuda</strong>.</p>
-                                </div>
-                                <div class="p-3 bg-slate-100 border border-slate-200 rounded-xl space-y-1 text-xs">
-                                    <span class="font-bold text-slate-700 block">Cancelar (0)</span>
-                                    <p class="text-slate-600 text-[11px]">Colocar cantidad en <strong>0</strong> y tildar el casillero <strong>cancela</strong> para anular el despacho del artículo.</p>
-                                </div>
-                                <div class="p-3 bg-emerald-50 border border-emerald-100 rounded-xl space-y-1 text-xs">
-                                    <span class="font-bold text-emerald-700 block">Sumar (+)</span>
-                                    <p class="text-emerald-900/80 text-[11px]">Presionar el signo <strong>+</strong>, colocar la letra <strong>V</strong>, y en el siguiente campo presionar <strong>F3</strong> para buscar y agregar nuevos productos.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 5 -->
-                    <div class="relative">
-                        <span class="absolute -left-[31px] top-0.5 w-4.5 h-4.5 bg-indigo-600 rounded-full border-4 border-white"></span>
-                        <div class="space-y-1">
-                            <h4 class="text-sm font-bold text-slate-850">5. Cierre y Guardado</h4>
-                            <p class="text-xs text-slate-550">Finalizada la revisión y conciliación de cantidades físicas y lógicas, hacer clic en la opción <strong>GUARDAR</strong> para registrar el despacho definitivo.</p>
+                        <p class="text-[11px] text-slate-600">Navegar a través del menú del sistema siguiendo la siguiente secuencia de opciones:</p>
+                        <div class="p-2 bg-indigo-50 border border-indigo-100 rounded-lg text-indigo-900 font-mono text-[10px] font-semibold w-fit">
+                            Gestión Sanatorial → Farmacia → Consola de Operaciones
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Review History -->
-            <div class="bg-white border border-slate-200 rounded-2xl p-5 space-y-3">
-                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Historial de Revisiones POE</h4>
-                <div class="text-xs space-y-2 text-slate-600">
-                    <div class="flex justify-between border-b border-slate-100 pb-1.5"><span class="font-medium">Revisión 0: Emisión Inicial</span><span class="font-mono">25/04/2025</span></div>
-                    <div class="flex justify-between"><span class="font-medium">Emitió: DT Agustina Villon</span><span class="font-mono">Farmacéutica</span></div>
+                <div class="border-t border-slate-100 pt-4 space-y-2">
+                    <h4 class="font-bold text-slate-800 text-xs">¿Qué es la Consola de Operaciones?</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Es el módulo del sistema desde donde el sector Farmacia administra todas las operaciones que mantiene con los distintos sectores del sanatorio. A través de esta consola se registran y gestionan los comprobantes que documentan cada movimiento interno, permitiendo mantener la trazabilidad de las operaciones de <strong>Pedidos, Entregas, Devoluciones, Ajustes de stock</strong> y otros comprobantes entre sectores.
+                    </p>
                 </div>
             </div>
         </section>
 
-        <!-- TAB 2: BARRIDOS Y HORARIOS -->
-        <section id="content-barridos" class="tab-content space-y-8">
-            <!-- Pharmacy Hours -->
-            <div class="space-y-4">
-                <h3 class="text-lg font-bold text-slate-850 border-b border-slate-200 pb-2 flex items-center gap-2">
-                    <i data-lucide="store" class="text-indigo-650 w-5 h-5"></i>
-                    Horarios de Atención Física de Farmacia
-                </h3>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-xs">
-                    <div class="p-3.5 bg-white border border-slate-200 rounded-xl space-y-1">
-                        <span class="text-slate-450 block">Lunes a Viernes</span>
-                        <span class="font-bold text-slate-800">07:00 a 22:00 hs</span>
+        <!-- TAB 2: TIPOS DE PEDIDO & FILTROS -->
+        <section id="content-tipos" class="tab-content space-y-8">
+            <!-- Circuito y Tipos de Pedidos -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 space-y-6">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900">El Circuito de los Pedidos de Internación</h3>
+                    <p class="text-xs text-slate-550 leading-relaxed mt-1">
+                        El objetivo es abastecer de medicamentos e insumos a los pisos de internación para que Enfermería administre los tratamientos indicados. Para dispensar, <strong>debe existir un pedido electrónico previo generado por Enfermería</strong> que contiene: paciente, episodio de internación, medicamentos/insumos, cantidades, y la fecha programada.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    <div class="p-5 border border-slate-200 rounded-xl space-y-2">
+                        <div class="flex items-center gap-2 text-indigo-650">
+                            <i data-lucide="package" class="w-5 h-5"></i>
+                            <span class="font-bold text-xs">Pedidos por Sector</span>
+                        </div>
+                        <p class="text-[11px] text-slate-600 leading-relaxed">
+                            Destinados al abastecimiento de insumos generales de un área (ej: algodón, gasas, povidona, cintas, guantes, jeringas). Su principal característica es que <strong>se imputan a la cuenta contable del sanatorio</strong>, ya que representan un costo operativo institucional.
+                        </p>
                     </div>
-                    <div class="p-3.5 bg-white border border-slate-200 rounded-xl space-y-1">
-                        <span class="text-slate-450 block">Sábados</span>
-                        <span class="font-bold text-slate-800">07:00 a 19:00 hs</span>
-                    </div>
-                    <div class="p-3.5 bg-white border border-slate-200 rounded-xl space-y-1">
-                        <span class="text-slate-450 block">Domingos</span>
-                        <span class="font-bold text-slate-800">10:00 a 18:00 hs</span>
-                    </div>
-                    <div class="p-3.5 bg-white border border-slate-200 rounded-xl space-y-1">
-                        <span class="text-slate-450 block">Feriados</span>
-                        <span class="font-bold text-slate-800">07:00 a 16:00 hs</span>
+
+                    <div class="p-5 border border-slate-200 rounded-xl space-y-2">
+                        <div class="flex items-center gap-2 text-emerald-650">
+                            <i data-lucide="user" class="w-5 h-5"></i>
+                            <span class="font-bold text-xs">Pedidos por Paciente</span>
+                        </div>
+                        <p class="text-[11px] text-slate-600 leading-relaxed">
+                            Destinados a un paciente específico e incluyen medicamentos, descartables y otros insumos de tratamiento. Su principal característica es que <strong>el costo se imputa directamente a la cuenta del paciente</strong> para su posterior facturación.
+                        </p>
                     </div>
                 </div>
             </div>
 
-            <!-- Barridos Details -->
-            <div class="space-y-4">
-                <h3 class="text-lg font-bold text-slate-850 border-b border-slate-200 pb-2 flex items-center gap-2">
-                    <i data-lucide="calendar" class="text-indigo-650 w-5 h-5"></i>
-                    Cronograma de Barridos Horarios
-                </h3>
-
-                <div class="space-y-3">
-                    <!-- Martes a Viernes -->
-                    <div class="p-4 bg-white border border-slate-200 rounded-2xl space-y-2">
-                        <span class="text-xs font-bold text-indigo-650 uppercase tracking-wider block">Martes a Viernes</span>
-                        <ul class="text-xs text-slate-600 list-disc pl-4 space-y-1">
-                            <li><strong>07:00 hs</strong>: Barrido de 22:00 hs (día anterior) a 06:00 hs (Supervisión)</li>
-                            <li><strong>07:00 hs (Post-Feriado)</strong>: Barrido de 16:00 hs (día anterior) a 06:00 hs (Supervisión)</li>
-                            <li><strong>08:00 hs</strong>: Barrido de 06:00 hs a 11:00 hs</li>
-                            <li><strong>11:00 hs</strong>: Barrido de 06:00 hs a 17:00 hs</li>
-                            <li><strong>14:00 hs y 19:00 hs</strong>: Barrido de 14:00 hs a 13:00 hs (día posterior)</li>
-                        </ul>
-                    </div>
-
-                    <!-- Sábados -->
-                    <div class="p-4 bg-white border border-slate-200 rounded-2xl space-y-2">
-                        <span class="text-xs font-bold text-indigo-650 uppercase tracking-wider block">Sábados</span>
-                        <ul class="text-xs text-slate-600 list-disc pl-4 space-y-1">
-                            <li><strong>07:00 hs</strong>: Barrido de 22:00 hs (día anterior) a 06:00 hs (Supervisión)</li>
-                            <li><strong>07:00 hs (Post-Feriado)</strong>: Barrido de 16:00 hs (día anterior) a 06:00 hs (Supervisión)</li>
-                            <li><strong>08:00 hs</strong>: Barrido de 06:00 hs a 13:00 hs</li>
-                            <li><strong>10:00 hs</strong>: Barrido de 09:00 hs a 09:00 hs (día posterior)</li>
-                            <li><strong>13:00 hs</strong>: Barrido de 13:00 hs a 13:00 hs (día posterior)</li>
-                            <li>* Antes de las 19:00 hs se van realizando barridos cortos adicionales.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Domingos -->
-                    <div class="p-4 bg-white border border-slate-200 rounded-2xl space-y-2">
-                        <span class="text-xs font-bold text-indigo-650 uppercase tracking-wider block">Domingos</span>
-                        <ul class="text-xs text-slate-600 list-disc pl-4 space-y-1">
-                            <li><strong>10:00 hs</strong>: Barrido de 19:00 hs (día anterior) a 10:00 hs (Supervisión)</li>
-                            <li><strong>11:00 hs</strong>: Barrido de 11:00 hs a 11:00 hs (día posterior)</li>
-                            <li>* Antes de las 18:00 hs se van realizando barridos cortos adicionales.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Lunes -->
-                    <div class="p-4 bg-white border border-slate-200 rounded-2xl space-y-2">
-                        <span class="text-xs font-bold text-indigo-650 uppercase tracking-wider block">Lunes</span>
-                        <ul class="text-xs text-slate-600 list-disc pl-4 space-y-1">
-                            <li><strong>07:00 hs</strong>: Barrido de 18:00 hs (día anterior) a 06:00 hs (Supervisión)</li>
-                            <li><strong>08:00 hs</strong>: Barrido de 06:00 hs a 11:00 hs</li>
-                            <li><strong>11:00 hs</strong>: Barrido de 07:00 hs a 17:00 hs</li>
-                            <li><strong>14:00 hs y 19:00 hs</strong>: Barrido de 14:00 hs a 13:00 hs (día posterior)</li>
-                        </ul>
-                    </div>
-
-                    <!-- Feriados -->
-                    <div class="p-4 bg-white border border-slate-200 rounded-2xl space-y-2">
-                        <span class="text-xs font-bold text-indigo-650 uppercase tracking-wider block">Feriados</span>
-                        <ul class="text-xs text-slate-600 list-disc pl-4 space-y-1">
-                            <li><strong>Martes a Viernes Feriado (07:00 hs)</strong>: Barrido de 22:00 hs (día anterior) a 06:00 hs (siempre que el día anterior la farmacia estuviera abierta hasta las 22:00 hs).</li>
-                            <li><strong>Lunes Feriado (07:00 hs)</strong>: Barrido de 18:00 hs (día anterior) a 06:00 hs (siempre que el día anterior haya sido domingo).</li>
-                            <li><strong>Feriado Post Feriado (07:00 hs)</strong>: Barrido de 16:00 hs (día anterior) a 06:00 hs (Supervisión).</li>
-                            <li><strong>Feriados (10:00 hs)</strong>: Barrido de 09:00 hs a 09:00 hs.</li>
-                            <li>* Antes de las 16:00 hs se van realizando barridos cortos adicionales.</li>
-                        </ul>
-                    </div>
-                </div>
+            <!-- Filtros de búsqueda -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 space-y-4">
+                <h3 class="text-base font-bold text-slate-900">Filtros de Búsqueda de Comprobantes</h3>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    La consola permite consultar los comprobantes aplicando criterios de búsqueda detallados:
+                </p>
+                <ul class="text-xs text-slate-600 list-disc pl-5 space-y-1.5">
+                    <li><strong>Tipo de Pedido</strong>: Filtrar por paciente, por sector o ambos en simultáneo.</li>
+                    <li><strong>Tipo de Comprobante</strong>: Permite buscar Entregas y Devoluciones.</li>
+                    <li><strong>Sector Destino</strong>: Seleccionar el área a entregar (ej: Internación 1.º Piso, Internación 2.º Piso, UTI, Guardia, etc.).</li>
+                    <li><strong>Rango de Fechas</strong>: Delimitar el periodo de tiempo y presionar el botón <strong>Obtener</strong> para recuperar los comprobantes.</li>
+                </ul>
             </div>
         </section>
 
-        <!-- TAB 3: ANALISIS OPERATIVO -->
-        <section id="content-reflexion" class="tab-content space-y-6">
-            <h3 class="text-lg font-bold text-slate-850 border-b border-slate-200 pb-2">
-                Preguntas de Análisis Operativo (Algoritmo)
-            </h3>
+        <!-- TAB 3: BANDEJA DE ENTRADA & PRIORIDADES -->
+        <section id="content-bandeja" class="tab-content space-y-8">
+            <!-- Bandeja de entrada info -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 space-y-4">
+                <h3 class="text-lg font-bold text-slate-900">Estructura de la Bandeja de Entrada</h3>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    Constituye el espacio donde se visualizan los pedidos pendientes. Cada fila representa un comprobante recibido y las columnas describen los detalles de la operación:
+                </p>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Card 1 -->
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow" onclick="toggleReflexion('ref1', this)">
-                    <div class="p-5 flex items-center justify-between bg-indigo-50/40">
-                        <span class="font-bold text-slate-800 text-xs">Gestión de la Deuda en Algoritmo</span>
-                        <i data-lucide="chevron-down" class="text-slate-400 rotate-icon w-4 h-4"></i>
-                    </div>
-                    <div id="ref1" class="expand-content px-5 pb-5 text-xs text-slate-600 border-t border-slate-100">
-                        <p class="pt-3 leading-relaxed">Cuando procesamos un pedido y restamos (-) productos debido a falta de stock físico, ¿cómo gestiona el sistema Algoritmo esta "deuda"? ¿Qué circuito se debe realizar para saldarla una vez recibido el stock?</p>
+                <!-- Columns Description Table -->
+                <div class="overflow-x-auto border border-slate-150 rounded-xl text-xs">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 border-b border-slate-200 text-[10px] font-bold text-slate-450 uppercase">
+                                <th class="p-3">Columna</th>
+                                <th class="p-3">Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-150 text-slate-700">
+                            <tr>
+                                <td class="p-3 font-semibold text-slate-800">Icono Desplegable</td>
+                                <td class="p-3">Permite expandir el comprobante para ver el detalle de los medicamentos e insumos solicitados. Su estado cambia para indicar si el pedido fue visualizado.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-slate-800">Comprobante / Ítem</td>
+                                <td class="p-3">Identificador único del sistema (tipo de comprobante, sucursal, número correlativo y fecha).</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-slate-800">Descripción</td>
+                                <td class="p-3">Identificación del paciente y su episodio de internación (número de episodio, número de paciente y nombre completo).</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-slate-800">Cantidad</td>
+                                <td class="p-3">Cantidad total de unidades solicitadas (se despliega en detalle).</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-slate-800">Fecha de emisión</td>
+                                <td class="p-3">Fecha y hora exacta en que el pedido fue generado.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-slate-800">Aplicación</td>
+                                <td class="p-3">Fecha y hora programadas para la primera administración del fármaco al paciente.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-slate-800">Usuario</td>
+                                <td class="p-3">Operador/Usuario que generó el pedido.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-slate-800">Sector Destino</td>
+                                <td class="p-3">Piso/Servicio donde se encuentra internado el paciente.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-slate-800">Rubro / Subrubro</td>
+                                <td class="p-3">Clasificación del medicamento o insumo.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-slate-800">Depósito destino</td>
+                                <td class="p-3">Depósito o botiquín desde donde se descontará el stock al procesar la entrega.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Prioridades visuales y botón Obtener -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Indicadores Visuales -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 space-y-4">
+                    <h3 class="font-bold text-slate-900 text-sm">Prioridades e Indicadores Visuales</h3>
+                    <p class="text-xs text-slate-600">La bandeja utiliza colores de fondo en cada fila para alertar sobre la urgencia de dispensación:</p>
+                    
+                    <div class="space-y-2 text-xs">
+                        <div class="flex items-center gap-3 p-2 bg-white border border-slate-200 rounded-lg">
+                            <span class="w-3.5 h-3.5 rounded bg-slate-100 border border-slate-350"></span>
+                            <span><strong>Fondo Blanco</strong>: Pedido Normal (rutinario)</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-2 bg-yellow-50 border border-yellow-200 rounded-lg">
+                            <span class="w-3.5 h-3.5 rounded bg-yellow-300 border border-yellow-450"></span>
+                            <span class="text-yellow-950"><strong>Fondo Amarillo</strong>: Pedido SOS (atención prioritaria)</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-2 bg-orange-50 border border-orange-200 rounded-lg">
+                            <span class="w-3.5 h-3.5 rounded bg-orange-400 border border-orange-500"></span>
+                            <span class="text-orange-950"><strong>Fondo Naranja</strong>: Pedido Urgente (atención inmediata)</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Card 2 -->
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow" onclick="toggleReflexion('ref2', this)">
-                    <div class="p-5 flex items-center justify-between bg-indigo-50/40">
-                        <span class="font-bold text-slate-800 text-xs">Sumar Productos No Predeterminados</span>
-                        <i data-lucide="chevron-down" class="text-slate-400 rotate-icon w-4 h-4"></i>
-                    </div>
-                    <div id="ref2" class="expand-content px-5 pb-5 text-xs text-slate-600 border-t border-slate-100">
-                        <p class="pt-3 leading-relaxed">¿Por qué el sistema Algoritmo requiere tipear el caracter "V" y presionar "F3" para buscar un producto agregado (+)? ¿Cómo ayuda esta nomenclatura a clasificar los tipos de viales o descartables?</p>
-                    </div>
+                <!-- Botón Obtener -->
+                <div class="bg-indigo-950 text-white rounded-2xl p-6 space-y-3 relative overflow-hidden">
+                    <i data-lucide="refresh-cw" class="absolute text-indigo-900/30 w-28 h-28 -bottom-4 -right-4"></i>
+                    <h3 class="font-bold text-white text-sm">Importancia del Botón "Obtener"</h3>
+                    <p class="text-xs text-indigo-200 leading-relaxed">
+                        Es vital recordar que <strong>la Bandeja de Entrada no se actualiza automáticamente en tiempo real</strong>. 
+                    </p>
+                    <p class="text-xs text-indigo-200 leading-relaxed">
+                        Al presionar el botón <strong>Obtener</strong> se ejecutan los procesos internos del sistema para recuperar, organizar e incorporar en pantalla las nuevas solicitudes que han emitido los pisos de internación. Se recomienda presionarlo periódicamente.
+                    </p>
                 </div>
             </div>
         </section>
@@ -325,7 +303,7 @@
                 content.classList.remove('active');
             });
             document.querySelectorAll('[id^="tab-"]').forEach(btn => {
-                btn.className = "py-4 text-sm font-medium border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition-all flex items-center gap-2";
+                btn.className = "py-4 text-sm font-medium border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition-all flex items-center gap-2 shrink-0";
             });
 
             // Set active tab
@@ -333,27 +311,7 @@
             
             // Set active button style
             const activeBtn = document.getElementById(`tab-${tabName}`);
-            activeBtn.className = "py-4 text-sm font-semibold border-b-2 border-indigo-600 text-indigo-600 transition-all flex items-center gap-2";
-        }
-
-        function toggleDetails(id) {
-            const element = document.getElementById(id);
-            if (element.classList.contains('expanded')) {
-                element.classList.remove('expanded');
-            } else {
-                element.classList.add('expanded');
-            }
-        }
-
-        function toggleReflexion(id, cardElement) {
-            const element = document.getElementById(id);
-            if (element.classList.contains('expanded')) {
-                element.classList.remove('expanded');
-                cardElement.classList.remove('expanded-card');
-            } else {
-                element.classList.add('expanded');
-                cardElement.classList.add('expanded-card');
-            }
+            activeBtn.className = "py-4 text-sm font-semibold border-b-2 border-indigo-650 text-indigo-600 transition-all flex items-center gap-2 shrink-0";
         }
     </script>
 </body>
