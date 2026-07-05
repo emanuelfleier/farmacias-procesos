@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Internación - IPAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Outfit', sans-serif;
+        }
+        .floor-transition {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glow-active {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+            animation: pulse-glow 2s infinite;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
+            50% { transform: scale(1.02); box-shadow: 0 0 25px rgba(59, 130, 246, 0.7); }
+        }
+        .step-inactive {
+            opacity: 0.4;
+            pointer-events: none;
+            filter: grayscale(80%);
+        }
+        .card-glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-slate-950/80 backdrop-blur-md border-b border-slate-800 py-4 px-6 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="p-2 bg-blue-600/20 text-blue-400 rounded-xl">
+                    <i data-lucide="activity" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-white tracking-wide">Simulador Interactivo de Internación</h1>
+                    <p class="text-xs text-slate-400">IPAM - Circuito Operativo del Medicamento</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="flex items-center gap-2 px-4 py-2 bg-slate-850 hover:bg-slate-800 border border-slate-700 text-slate-300 text-sm font-medium rounded-xl transition-all">
+                    <i data-lucide="book-open" class="w-4 h-4"></i>
+                    Guía Teórica
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Column 1: Hospital Structure (5 cols) -->
+        <section class="lg:col-span-5 space-y-6">
+            <div class="bg-slate-950/50 border border-slate-800 p-6 rounded-3xl space-y-6">
+                <div>
+                    <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i data-lucide="building-2" class="text-blue-500 w-5 h-5"></i>
+                        Estructura Sanatorial
+                    </h2>
+                    <p class="text-xs text-slate-400">Visualización de los 5 pisos de internación. Haz clic en el 3º Piso.</p>
+                </div>
+
+                <!-- Hospital Building representation -->
+                <div class="flex flex-col gap-3">
+                    <!-- Piso 5 -->
+                    <div class="floor-transition p-4 bg-slate-850/50 hover:bg-slate-800/50 border border-slate-800 rounded-2xl cursor-not-allowed opacity-60 flex justify-between items-center">
+                        <span class="text-sm font-semibold text-slate-400">5º Piso - Internación General B</span>
+                        <span class="text-xs px-2.5 py-0.5 bg-slate-800 text-slate-400 rounded-full">Hab: 501-520</span>
+                    </div>
+
+                    <!-- Piso 4 -->
+                    <div class="floor-transition p-4 bg-slate-850/50 hover:bg-slate-800/50 border border-slate-800 rounded-2xl cursor-not-allowed opacity-60 flex justify-between items-center">
+                        <span class="text-sm font-semibold text-slate-400">4º Piso - Internación General A</span>
+                        <span class="text-xs px-2.5 py-0.5 bg-slate-800 text-slate-400 rounded-full">Hab: 401-420</span>
+                    </div>
+
+                    <!-- Piso 3 (ACTIVE & ACCESSIBLE) -->
+                    <div id="floor-3-container" class="floor-transition p-4 bg-blue-950/30 border-2 border-blue-600 rounded-2xl cursor-pointer flex flex-col gap-4">
+                        <div class="flex justify-between items-center w-full" onclick="toggleFloor3Detail()">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 bg-blue-500 rounded-full animate-ping"></span>
+                                <span class="text-sm font-bold text-blue-300">3º Piso - Internación Cuidados Críticos</span>
+                            </div>
+                            <span class="text-xs px-2.5 py-0.5 bg-blue-600/30 text-blue-300 rounded-full font-medium">Hab: 301-304</span>
+                        </div>
+
+                        <!-- Floor 3 Zoom Panel -->
+                        <div id="floor-3-rooms" class="grid grid-cols-2 gap-3 pt-2 border-t border-blue-900/50">
+                            <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-xl text-center text-xs opacity-50 cursor-not-allowed">Hab. 301</div>
+                            <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-xl text-center text-xs opacity-50 cursor-not-allowed">Hab. 302</div>
+                            <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-xl text-center text-xs opacity-50 cursor-not-allowed">Hab. 303</div>
+                            <!-- Selected Room 304 -->
+                            <div id="room-304" class="p-3 bg-blue-600/20 border-2 border-blue-500 rounded-xl text-center text-xs text-white font-bold glow-active flex flex-col items-center justify-center gap-1">
+                                <i data-lucide="bed-double" class="w-4 h-4 text-blue-400"></i>
+                                Habitación 304
+                                <span class="text-[9px] font-normal text-blue-300">Paciente: Juan Gómez</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Piso 2 -->
+                    <div class="floor-transition p-4 bg-slate-850/50 hover:bg-slate-800/50 border border-slate-800 rounded-2xl cursor-not-allowed opacity-60 flex justify-between items-center">
+                        <span class="text-sm font-semibold text-slate-400">2º Piso - Maternidad y Pediatría</span>
+                        <span class="text-xs px-2.5 py-0.5 bg-slate-800 text-slate-400 rounded-full">Hab: 201-220</span>
+                    </div>
+
+                    <!-- Piso 1 -->
+                    <div class="floor-transition p-4 bg-slate-850/50 hover:bg-slate-800/50 border border-slate-800 rounded-2xl cursor-not-allowed opacity-60 flex justify-between items-center">
+                        <span class="text-sm font-semibold text-slate-400">1º Piso - Quirófano y Guardia</span>
+                        <span class="text-xs px-2.5 py-0.5 bg-slate-800 text-slate-400 rounded-full">Hab: 101-120</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulation Status Log -->
+            <div class="bg-slate-950/50 border border-slate-800 p-5 rounded-3xl space-y-3">
+                <h3 class="text-sm font-bold text-slate-300 flex items-center gap-2">
+                    <i data-lucide="terminal" class="text-blue-400 w-4 h-4"></i>
+                    Bitácora del Circuito
+                </h3>
+                <div id="bitacora" class="h-32 overflow-y-auto text-xs font-mono text-slate-400 space-y-2 pr-2">
+                    <p class="text-slate-500">[01:47:26] Sistema iniciado. Esperando indicación médica en Hab. 304...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Column 2: Interactive Simulation Steps (7 cols) -->
+        <section class="lg:col-span-7 space-y-6">
+
+            <!-- Step Progress Indicator -->
+            <div class="bg-slate-950/40 border border-slate-800 p-4 rounded-2xl flex items-center justify-between gap-2 overflow-x-auto">
+                <div id="prog-step1" class="flex items-center gap-2 shrink-0 text-blue-400 font-semibold text-sm">
+                    <span class="w-6 h-6 rounded-full bg-blue-600/20 border border-blue-500 flex items-center justify-center text-xs">1</span>
+                    Médico
+                </div>
+                <div class="h-0.5 w-8 bg-slate-800 shrink-0" id="line-step1"></div>
+                <div id="prog-step2" class="flex items-center gap-2 shrink-0 text-slate-500 font-semibold text-sm">
+                    <span class="w-6 h-6 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-xs">2</span>
+                    Planificación
+                </div>
+                <div class="h-0.5 w-8 bg-slate-800 shrink-0" id="line-step2"></div>
+                <div id="prog-step3" class="flex items-center gap-2 shrink-0 text-slate-500 font-semibold text-sm">
+                    <span class="w-6 h-6 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-xs">3</span>
+                    Farmacia
+                </div>
+                <div class="h-0.5 w-8 bg-slate-800 shrink-0" id="line-step3"></div>
+                <div id="prog-step4" class="flex items-center gap-2 shrink-0 text-slate-500 font-semibold text-sm">
+                    <span class="w-6 h-6 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-xs">4</span>
+                    Administración
+                </div>
+            </div>
+
+            <!-- Dynamic Workstation Panel -->
+            <div id="workstation-container" class="relative">
+
+                <!-- STEP 1: Medical Prescription Workstation -->
+                <div id="step-panel-1" class="bg-slate-950 border border-slate-800 rounded-3xl p-6 space-y-6">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-blue-600/10 text-blue-400 flex items-center justify-center">
+                                <i data-lucide="stethoscope" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-md font-bold text-white">Estación del Médico: Prescribir Receta</h3>
+                                <p class="text-xs text-slate-400">Ingreso de indicaciones terapéuticas en Hab. 304</p>
+                            </div>
+                        </div>
+                        <span class="text-[10px] px-2.5 py-1 bg-blue-900/30 text-blue-400 border border-blue-800 rounded-full font-mono">Paso 1 de 4</span>
+                    </div>
+
+                    <div class="p-5 bg-slate-900/50 border border-slate-850 rounded-2xl space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 mb-1.5">Medicamento a Indicar</label>
+                                <select id="prescription-med" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-white focus:border-blue-500 focus:outline-none">
+                                    <option value="Amoxicilina 500mg">Amoxicilina 500 mg (Comprimido)</option>
+                                    <option value="Paracetamol 1g">Paracetamol 1 g (Vía Oral)</option>
+                                    <option value="Ceftriaxona 1g">Ceftriaxona 1 g (Intravenoso)</option>
+                                    <option value="Omeprazol 40mg">Omeprazol 40 mg (Inyectable)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 mb-1.5">Frecuencia / Intervalo</label>
+                                <select id="prescription-freq" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-white focus:border-blue-500 focus:outline-none">
+                                    <option value="Cada 8 horas">Cada 8 horas (3 veces al día)</option>
+                                    <option value="Cada 12 horas">Cada 12 horas (2 veces al día)</option>
+                                    <option value="Cada 24 horas">Cada 24 horas (1 vez al día)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1.5">Notas Médicas / Diagnóstico</label>
+                            <input type="text" id="prescription-notes" value="Neumonía bacteriana moderada. Monitorear evolución." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-white focus:border-blue-500 focus:outline-none" />
+                        </div>
+                    </div>
+
+                    <button onclick="submitStep1()" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-900/30">
+                        Enviar Indicación a Enfermería
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- STEP 2: Nurse Planning Workstation -->
+                <div id="step-panel-2" class="bg-slate-950 border border-slate-800 rounded-3xl p-6 space-y-6 step-inactive hidden">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-teal-600/10 text-teal-400 flex items-center justify-center">
+                                <i data-lucide="clipboard-list" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-md font-bold text-white">Estación de Enfermería: Planificación</h3>
+                                <p class="text-xs text-slate-400">Configuración de los horarios para Hab. 304</p>
+                            </div>
+                        </div>
+                        <span class="text-[10px] px-2.5 py-1 bg-teal-900/30 text-teal-400 border border-teal-800 rounded-full font-mono">Paso 2 de 4</span>
+                    </div>
+
+                    <div class="p-5 bg-slate-900/50 border border-slate-850 rounded-2xl space-y-4">
+                        <div class="border-l-4 border-blue-500 bg-blue-950/20 p-3.5 rounded-r-xl">
+                            <span class="block text-[10px] font-bold text-blue-400 uppercase tracking-wider">Receta Activa Recibida</span>
+                            <span id="active-prescription-summary" class="text-xs font-semibold text-white">Cargando receta...</span>
+                        </div>
+
+                        <div>
+                            <span class="block text-xs font-semibold text-slate-400 mb-3">Definir Horarios de Administración (Barrido Horario)</span>
+                            <div class="grid grid-cols-3 gap-2" id="planning-times-container">
+                                <!-- Generated times checkboxes will be placed here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="submitStep2()" class="w-full py-3 bg-teal-600 hover:bg-teal-500 text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-teal-950/30">
+                        Generar Pedido para Farmacia
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- STEP 3: Pharmacy Workstation -->
+                <div id="step-panel-3" class="bg-slate-950 border border-slate-800 rounded-3xl p-6 space-y-6 step-inactive hidden">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-purple-600/10 text-purple-400 flex items-center justify-center">
+                                <i data-lucide="package-check" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-md font-bold text-white">Estación de Farmacia: Dispensación</h3>
+                                <p class="text-xs text-slate-400">Preparación de dosis unitaria y despacho</p>
+                            </div>
+                        </div>
+                        <span class="text-[10px] px-2.5 py-1 bg-purple-900/30 text-purple-400 border border-purple-800 rounded-full font-mono">Paso 3 de 4</span>
+                    </div>
+
+                    <div class="p-5 bg-slate-900/50 border border-slate-850 rounded-2xl space-y-4">
+                        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                            <span class="text-xs font-semibold text-slate-400">Pedido Generado por Enfermería</span>
+                            <span class="text-xs font-mono px-2 py-0.5 bg-slate-800 text-slate-300 rounded">ID Pedido: #F-9281</span>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs">
+                                <span class="text-slate-400">Habitación:</span>
+                                <span class="text-white font-medium">304 (Cama 1)</span>
+                            </div>
+                            <div class="flex justify-between text-xs">
+                                <span class="text-slate-400">Medicamento:</span>
+                                <span id="pharmacy-med-name" class="text-white font-medium">-</span>
+                            </div>
+                            <div class="flex justify-between text-xs">
+                                <span class="text-slate-400">Dosis planificadas:</span>
+                                <span id="pharmacy-med-hours" class="text-white font-medium">-</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-purple-950/20 border border-purple-900/30 p-3 rounded-xl flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-purple-600/20 text-purple-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="shield-check" class="w-4 h-4"></i>
+                            </div>
+                            <span class="text-[10px] text-purple-300">Validado por farmacéutico de turno. Stock disponible para despacho.</span>
+                        </div>
+                    </div>
+
+                    <button onclick="submitStep3()" class="w-full py-3 bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-purple-950/30">
+                        Preparar y Despachar a Piso 3
+                        <i data-lucide="truck" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- STEP 4: Nurse Administration Workstation -->
+                <div id="step-panel-4" class="bg-slate-950 border border-slate-800 rounded-3xl p-6 space-y-6 step-inactive hidden">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-600/10 text-emerald-400 flex items-center justify-center">
+                                <i data-lucide="user-check" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-md font-bold text-white">Estación de Enfermería: Administración</h3>
+                                <p class="text-xs text-slate-400">Verificación al pie de la cama en Hab. 304</p>
+                            </div>
+                        </div>
+                        <span class="text-[10px] px-2.5 py-1 bg-emerald-900/30 text-emerald-400 border border-emerald-800 rounded-full font-mono">Paso 4 de 4</span>
+                    </div>
+
+                    <div class="p-5 bg-slate-900/50 border border-slate-850 rounded-2xl space-y-4">
+                        <div class="flex justify-between items-center bg-emerald-950/15 border border-emerald-900/40 p-4 rounded-xl">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400"></i>
+                                <div>
+                                    <span class="block text-xs font-bold text-white">Medicación Entregada y Lista</span>
+                                    <span id="admin-med-summary" class="text-[11px] text-slate-400">Cargando...</span>
+                                </div>
+                            </div>
+                            <span class="text-[10px] font-bold text-emerald-400 bg-emerald-900/20 px-2 py-1 rounded">En Office de Piso 3</span>
+                        </div>
+
+                        <div class="space-y-2 text-xs">
+                            <div class="flex items-center gap-2 text-slate-400">
+                                <i data-lucide="circle" class="w-3.5 h-3.5 text-blue-500 fill-blue-500"></i>
+                                <span>Paciente correcto: Juan Gómez (Hab. 304)</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-slate-400">
+                                <i data-lucide="circle" class="w-3.5 h-3.5 text-blue-500 fill-blue-500"></i>
+                                <span>Medicamento y dosis correcta verificado</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-slate-400">
+                                <i data-lucide="circle" class="w-3.5 h-3.5 text-blue-500 fill-blue-500"></i>
+                                <span>Vía y hora planificada verificado</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="submitStep4()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/30">
+                        Confirmar y Registrar Administración
+                        <i data-lucide="check-square" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Simulation Success Modal -->
+                <div id="success-panel" class="bg-slate-950 border-2 border-emerald-500 rounded-3xl p-8 space-y-6 text-center hidden">
+                    <div class="w-16 h-16 bg-emerald-500/20 border-2 border-emerald-500 text-emerald-400 rounded-full flex items-center justify-center mx-auto animate-bounce">
+                        <i data-lucide="party-popper" class="w-8 h-8"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="text-xl font-bold text-white">¡Circuito Completado Exitosamente!</h3>
+                        <p class="text-xs text-slate-400 max-w-sm mx-auto">La medicación fue prescrita, planificada, despachada y administrada al paciente garantizando la máxima seguridad.</p>
+                    </div>
+
+                    <div class="p-4 bg-slate-900/60 rounded-xl space-y-2 text-left max-w-md mx-auto text-xs text-slate-300">
+                        <div class="flex justify-between"><span class="text-slate-500">Autor:</span><span>Emanuel Fleier</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500">Desarrollo:</span><span>Emilia Reposi, Liliana Ponti y Gabriel González</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500">Versión:</span><span>v453</span></div>
+                    </div>
+
+                    <button onclick="restartSimulation()" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs rounded-xl transition-all">
+                        Reiniciar Simulación
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-6 px-6 text-center text-xs text-slate-500 mt-auto">
+        <p>Documentación Interna - IPAM</p>
+        <p class="mt-1">Enero 2025 • Versión v453</p>
+    </footer>
+
+    <!-- JavaScript logic -->
+    <script>
+        lucide.createIcons();
+
+        // State variables
+        let selectedMed = "";
+        let selectedFreq = "";
+        let notes = "";
+        let plannedTimes = [];
+
+        function addBitacora(message) {
+            const bitacora = document.getElementById("bitacora");
+            const time = new Date().toLocaleTimeString();
+            const log = document.createElement("p");
+            log.innerHTML = `<span class="text-slate-600">[${time}]</span> ${message}`;
+            bitacora.appendChild(log);
+            bitacora.scrollTop = bitacora.scrollHeight;
+        }
+
+        function toggleFloor3Detail() {
+            // Already toggled and zoomed by default in this simulation to focus on Hab. 304
+        }
+
+        // STEP 1 Submit: Doctor prescribes
+        function submitStep1() {
+            selectedMed = document.getElementById("prescription-med").value;
+            selectedFreq = document.getElementById("prescription-freq").value;
+            notes = document.getElementById("prescription-notes").value;
+
+            addBitacora(`Médico prescribió <strong class="text-blue-400">${selectedMed}</strong> (${selectedFreq}) en Hab. 304.`);
+            
+            // Set summary in Step 2
+            document.getElementById("active-prescription-summary").innerText = `${selectedMed} - ${selectedFreq} (Nota: ${notes})`;
+
+            // Generate administration times checkboxes based on frequency
+            const container = document.getElementById("planning-times-container");
+            container.innerHTML = "";
+            let hours = [];
+            if (selectedFreq.includes("8 horas")) {
+                hours = ["08:00", "16:00", "00:00"];
+            } else if (selectedFreq.includes("12 horas")) {
+                hours = ["09:00", "21:00"];
+            } else {
+                hours = ["10:00"];
+            }
+
+            hours.forEach(hr => {
+                const id = `time-${hr.replace(':', '')}`;
+                container.innerHTML += `
+                    <label class="flex items-center gap-2 p-2 bg-slate-900 border border-slate-800 hover:border-teal-600 rounded-xl cursor-pointer">
+                        <input type="checkbox" id="${id}" checked class="accent-teal-500">
+                        <span class="text-xs text-white font-mono">${hr} hs</span>
+                    </label>
+                `;
+            });
+
+            // Transition UI
+            transitionStep(1, 2);
+        }
+
+        // STEP 2 Submit: Nurse plans times
+        function submitStep2() {
+            const checkboxes = document.querySelectorAll("#planning-times-container input[type='checkbox']");
+            plannedTimes = [];
+            checkboxes.forEach(cb => {
+                if (cb.checked) {
+                    plannedTimes.push(cb.parentElement.textContent.trim());
+                }
+            });
+
+            if (plannedTimes.length === 0) {
+                alert("Por favor selecciona al menos un horario de planificación.");
+                return;
+            }
+
+            addBitacora(`Enfermería planificó administración a las: <strong class="text-teal-400">${plannedTimes.join(', ')}</strong>.`);
+            addBitacora(`Requerimiento formal (#F-9281) enviado a la cola de preparación de Farmacia.`);
+
+            // Prepare pharmacy panel details
+            document.getElementById("pharmacy-med-name").innerText = selectedMed;
+            document.getElementById("pharmacy-med-hours").innerText = plannedTimes.join(', ');
+
+            // Transition UI
+            transitionStep(2, 3);
+        }
+
+        // STEP 3 Submit: Pharmacist dispenses
+        function submitStep3() {
+            addBitacora(`Farmacia validó receta, fraccionó stock y despachó dosis a Office del Piso 3.`);
+            
+            // Set admin panel details
+            document.getElementById("admin-med-summary").innerText = `${selectedMed} para las ${plannedTimes.join(', ')}`;
+
+            // Transition UI
+            transitionStep(3, 4);
+        }
+
+        // STEP 4 Submit: Nurse administers to patient
+        function submitStep4() {
+            addBitacora(`Enfermero/a verificó los 5 correctos en Hab. 304.`);
+            addBitacora(`Medicamento administrado exitosamente al paciente Juan Gómez.`);
+            addBitacora(`Circuito de medicación finalizado con registro informático.`);
+
+            // Hide Step 4, Show Success
+            document.getElementById("step-panel-4").classList.add("hidden");
+            document.getElementById("success-panel").classList.remove("hidden");
+        }
+
+        // Transition logic between panels
+        function transitionStep(current, next) {
+            const currentPanel = document.getElementById(`step-panel-${current}`);
+            const nextPanel = document.getElementById(`step-panel-${next}`);
+            
+            currentPanel.classList.add("hidden");
+            nextPanel.classList.remove("hidden");
+            nextPanel.classList.remove("step-inactive");
+
+            // Update status indicator
+            const currentProg = document.getElementById(`prog-step${current}`);
+            const nextProg = document.getElementById(`prog-step${next}`);
+            const line = document.getElementById(`line-step${current}`);
+
+            currentProg.classList.remove("text-blue-400");
+            currentProg.classList.add("text-emerald-500");
+            currentProg.querySelector("span").innerHTML = '<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>';
+            currentProg.querySelector("span").classList.remove("bg-blue-600/20", "border-blue-500");
+            currentProg.querySelector("span").classList.add("bg-emerald-600/20", "border-emerald-500");
+
+            if (line) {
+                line.classList.remove("bg-slate-800");
+                line.classList.add("bg-emerald-500");
+            }
+
+            nextProg.classList.remove("text-slate-500");
+            nextProg.classList.add("text-blue-400");
+            nextProg.querySelector("span").classList.remove("bg-slate-900", "border-slate-800");
+            nextProg.querySelector("span").classList.add("bg-blue-600/20", "border-blue-500");
+
+            lucide.createIcons();
+        }
+
+        function restartSimulation() {
+            // Reload page to reset everything
+            location.reload();
+        }
+    </script>
+</body>
+
+</html>
