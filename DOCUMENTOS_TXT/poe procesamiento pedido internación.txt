@@ -1,0 +1,51 @@
+PROCEDIMIENTO: procesamiento de pedidos de internación
+
+Objetivo: asegurar la entrega correcta y oportuna de los productos farmacéuticos y dispositivos médicos por el sector de farmacia, como respuesta al pedido para los pacientes internados.
+Alcance: Farmacia- pisos de internación (1ro al 5to)
+Descripción del procedimiento:
+
+Ingresar al sistema Algoritmo con contraseña personal.
+Ir a la pestaña GESTIÓN SANATORIAL. 
+Elegir la opción FARMACIA.
+Seleccionar CONSOLA DE OPERACIONES.
+Elegir la opción BANDEJA DE ENTRADA. 
+Seleccionar en la pestaña GENERAR PEDIDO.
+Allí seleccionar el SECTOR (Internación 1er, 2do, 3ro, etc).
+Seleccionar la fecha y colocar el horario (Fecha/ hora desde: del día/12hs – Fecha/hora hasta: día siguiente/11hs).
+Presionar GENERAR. 
+Ir nuevamente a BANDEJA DE ENTRADA.
+En el campo DESTINO, seleccionar el sector según corresponda.
+Seleccionar OBTENER. 
+Aparecerán en pantalla la indicación diaria de todos los pacientes del sector.
+Con el botón derecho del cursor, seleccionar en cada paciente la opción IMPRIMIR (2 copias, 1 para farmacia, otra para enviar con el pedido).
+Una vez preparado el pedido, nuevamente con el botón derecho del cursor, seleccionar la opción PROCESAR. Aquí se podrá modificar cantidades entregadas y los productos. Se puede restar (-) productos, los cuales quedarán en deuda. Se puede cancelar, para eso, colocar 0 en cantidad y tildar el casillero de cancela. O se puede sumar (+), para eso, presionar el signo +, colocar la letra V y en el siguiente campo presionar F3 para buscar el producto que queremos agregar. 
+Finalizada la revisión, elegir la opción GUARDAR.
+
+Historial de revisiones
+Revisión
+Fecha
+Modificación
+
+0
+25/04/25
+Emisión inicial
+
+
+Emitió
+VILLON AGUSTINA
+
+Cargo
+DT Farmacéutica
+
+
+Revisó
+
+Aprobó
+
+
+Cargo
+
+Cargo
+
+
+

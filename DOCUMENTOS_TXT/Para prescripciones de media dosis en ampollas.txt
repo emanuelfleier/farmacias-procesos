@@ -1,0 +1,32 @@
+Para prescripciones de media dosis en ampollas, se requiere un procedimiento específico, dado que Farmacia suministra las unidades completas y la correcta contabilización debe reflejarse en Facturación. 
+El registro de administración debe cumplir criterios estandarizados que permitan: 
+Reflejar el consumo de una ampolla completa en el sistema, aun cuando se administre media dosis. 
+Mantener congruencia entre prescripción médica, planificación de Enfermería y dispensación farmacéutica.
+ Garantizar contabilización precisa de insumos por parte de Farmacia y Facturación. asegurar documentación clínica clara, completa, trazable y con validez legal
+Cuando la indicación se trate de media ampolla es fundamental ajustar la cantidad de media unidad a una ampolla completa, de modo que farmacia entregue siempre una unidad por cada administración. Excepto en los casos que la media ampolla se pueda conservar, para lo cual debemos tener en cuenta la estabilidad. 
+
+Ampollas que se pueden conservar y entonces no es necesario ajustar la cantidad:
+
+Aciclovir frasco ampolla (luego de reconstituido tiene una estabilidad a temperatura ambiente de 12hs).
+Anfotericina B comun y liposomal (luego de reconstituido tiene una estabilidad en heladera de 24hs).
+Aztreonam (luego de reconstituido tiene una estabilidad a temperatura ambiente de 48hs y en heladera de 7 dias).
+Cefalotina (luego de reconstituido tiene una estabilidad de 12hs a temperatura ambiente y de 96hs en heladera)
+Cefazolina (luego de reconstituido tiene una estabilidad de 24hs a temperatura ambiente y de 7 dias en heladera)
+Cefepime (luego de reconstituida tiene una estabilidad de 24hs a temperatura ambiente y de 7 dias en heladera)
+Cefotaxima (luego de reconstituida tiene una estabilidad de 12hs a temperatura ambiente y de 7 dias en heladera)
+Ceftazidima (luego de reconstituida tiene una estabilidad de 24hs a temperatura ambiente y de 7 dias en heladera)
+Ceftriaxona (luego de reconstituida tiene una estabilidad de 24 hs a temperatura ambiente y de 10 dias en heladera)
+Claritromicina (luego de reconstituida tiene una estabilidad de 24hs a temperatura ambiente y de 48hs  en heladera)
+Colistina (luego de reconstituida tiene una estabilidad 24hs  en heladera)
+Fosfomicina (luego de reconstituida tiene una estabilidad de 24hs en heladera)
+Hidrocortisona (luego de reconstituida tiene una estabilidad de 24hs a temperatura ambiente)
+Imipenem- Cilast (luego de reconstituida tiene una estabilidad de 24hs en heladera)
+Nitroprusiato (luego de reconstituida tiene una estabilidad de 24 hs a temperatura ambiente)
+Piperalcina+ tazobactam (luego de reconstituida tiene una estabilidad de 24hs a temperatura ambiente y de 48hs en heladera)
+Remifentanilo (luego de reconstituida tiene una estabilidad de 24hs a temperatura ambiente y 24hs en heladera)
+Vancomicina (luego de reconstituida tiene una estabilidad de 24hs a temperatura ambiente y de 96 hs en heladera)
+
+Para el resto de medicación se debe modificar la cantidad a uno debido a que no se puede conservar el resto de la ampolla. 
+
+
+

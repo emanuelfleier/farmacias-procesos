@@ -1,0 +1,25 @@
+	En farmacia contamos con varios tipos de comprobantes. 
+PMP: pedido de medicamentos por pacientes, se genera a través de la indicación medica y la planificación por parte de enfermería, es el comprobante que se genera al hacer un barrido. Al procesar ese pedido por parte de farmacia se genera un VMP (vale de medicamento por paciente).
+PMS: pedido de medicamento por sector, es cuando hacen un pedido por sector y no a nombre de un paciente. Cuando farmacia procesa este tipo de pedido se genera un VMS (vale de medicamento por sector) 
+Para poder ver todo este tipo de comprobantes podemos verlos en el reporte de comprobantes emitidos, en el cual podemos filtrar para ver por ejemplo todos los comprobantes que se le generaron a un paciente, esto es muy útil cuando queremos ver que pedidos se generaron y la relación con lo que nosotros procesamos porque nos permite ver el PMP y el VMP. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lo que se encuentra en celeste es porque siempre
+Se debe completar de esta manera.
+Al hacer click en vista previa obtendremos lo siguiente: 
+
+Podemos ver que obtuvimos al barrer como PMP, lo que no aparece ahí es porque no fue barrido. Y podemos ver lo que procesamos (VMP)
+Por ejemplo podemos ver que en el PMP se pedían 4 jeringas de 10ml y en el VMP vemos que entregamos 2. 
+

@@ -1,0 +1,60 @@
+CENSO 
+Es el conteo y registro de todos los pacientes que ocupan camas en el sanatorio en un momento dado.
+¿Cómo ingreso al censo?
+
+
+
+
+
+
+
+
+
+
+
+Luego de aplicar cualquiera de los dos filtros que queremos ponemos vista previa y obtendremos lo siguiente:
+
+Al final de las paginas podemos ver la totalidad de camas ocupadas 
+
+
+
+
+
+
+
+
+
+
+
+
+
+Dentro del mismo reporte podemos ver el movimiento ocupacional por paciente, este nos sirve para saber si un paciente paso de un piso a otro, de la guardia al piso o a terapia y los horarios en lo que esto sucedió. 
+
+
+
+
+
+
+
+
+Luego de completar lo antes mencionado damos click en vista previa y veremos lo siguiente:
+
+Ahí podemos ver que el paciente ingreso el 11/07 a las 21:29 a la guardia e inmediatamente paso al quinto piso, habitación 506 cama 1. También nos dice que el paciente tiene la obra social PAMI y que ingreso por una disnea/insuficiencia respiratoria. 
+
+También dentro del mismo apartado tenemos el reporte ingreso/egreso donde podemos filtrar por los ingresos o egresos, podemos ordenarlos por paciente alfabéticamente o por fecha, también podemos filtrar por los motivos de egreso
+
+
+
+
+
+
+
+
+Luego al igual que en los otros reportes hacemos click en vista previa y nos aparecerá lo siguiente
+
+Ahí como en este caso se eligió ver los egresos, obtenemos información de la fecha de egreso, el numero de internación, el numero de paciente, la obra social y por ultimo la fecha de ingreso.
+La ante ultima columna nos indica los días que el paciente estuvo internado.
+La ultima columna es el motivo de egreso, que la A significa alta, la D defunción y TE significa traslado a otro efector. 
+
+
+

@@ -1,0 +1,17 @@
+MODIFICACION DE VALE 
+A partir de la ficha de movimiento podemos obtener el numero de vale y luego desde la consola podemos modificarlo:
+
+
+
+MODIFICAR VALE A PACIENTES
+
+
+
+
+En numero de vale debemos completar con el numero que obtuvimos de la ficha de movimiento. Completamos con VMP porque estamos queriendo ver un vale de medicacion por paciente.
+MODIFICAR VALE POR SECTOR
+
+
+
+En numero debemos completar el numero de vale que obtuvimos en la ficha de movimiento. 
+Una vez que completamos los datos hacemos click en aceptar y se abre el vale y podemos modificar lo que necesitemos y luego hacemos click en guardar. 

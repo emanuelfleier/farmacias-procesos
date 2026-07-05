@@ -1,0 +1,31 @@
+FICHA DE MOVIMEINTO
+La podemos usar cuando queremos ver el movimiento de un determinado producto y de ahí podemos obtener el número de vale también para poder modificarlo
+¿Cómo ingreso a la ficha de movimiento?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lo que se encuentra recuadrado en color celeste es porque siempre deben completarse de esta forma.
+Al hacer click en vista previa obtendremos lo siguiente: 
+
+	
+
+
+En la parte superior podemos ver el articulo que estamos mirando los movimientos.
+Podemos obtener el numero de vale para poder modificarlo. 
+En la columna concepto podemos ver el nombre del paciente y el numero de internación.  
+El numero que se encuentra en la columna salidas es la cantidad que fue procesada, cuando queda vacío es porque lo procesamos como 0.
+
+

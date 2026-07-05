@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flujo del Medicamento - Sanatorio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .expand-content {
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            margin-top: 0;
+        }
+        .expanded {
+            max-height: 800px; /* Suficiente para el contenido de las listas */
+            opacity: 1;
+            margin-top: 1rem;
+        }
+        .rotate-icon {
+            transition: transform 0.3s ease;
+        }
+        .expanded-card .rotate-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen">
+
+    <header class="bg-slate-900 text-white py-16 px-6 shadow-md relative z-10">
+        <div class="max-w-5xl mx-auto text-center">
+            <h1 class="text-3xl md:text-5xl font-bold mb-4">Circuito General del Medicamento</h1>
+            <p class="text-slate-300 text-lg md:text-xl max-w-3xl mx-auto">
+                El recorrido paso a paso desde la decisión terapéutica hasta la administración al paciente.
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-16 relative">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-slate-800">El Proceso Operativo</h2>
+            <p class="text-slate-500 mt-2">Hacé clic en cada área para expandir los detalles.</p>
+        </div>
+        
+        <div class="hidden md:block absolute left-1/2 top-40 bottom-16 w-1 bg-slate-200 -ml-0.5 z-0"></div>
+
+        <div class="space-y-12 relative z-10">
+            <div class="flex flex-col md:flex-row items-center justify-between w-full group cursor-pointer" onclick="toggleDetails('step1')">
+                <div class="md:w-5/12 w-full order-2 md:order-1 text-right md:pr-8 mt-4 md:mt-0">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-400 hover:shadow-md transition-all text-left md:text-right">
+                        <h3 class="text-xl font-bold text-blue-900 mb-2">1. Indicación Médica</h3>
+                        <p class="text-slate-600 text-sm">El médico evalúa al paciente y registra la decisión terapéutica en la Historia Clínica.</p>
+                        <div id="step1" class="expand-content text-left pt-4 border-t border-slate-100">
+                            <ul class="text-sm text-slate-500 list-disc pl-4 space-y-1">
+                                <li>La indicación no implica entrega inmediata por parte de Farmacia.</li>
+                                <li>El médico no solicita directamente los medicamentos a Farmacia.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center shadow-lg border-4 border-white shrink-0 z-10">
+                    <i data-lucide="stethoscope" class="text-white w-6 h-6"></i>
+                </div>
+                <div class="md:w-5/12 w-full order-3 hidden md:block"></div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center justify-between w-full group cursor-pointer" onclick="toggleDetails('step2')">
+                <div class="md:w-5/12 w-full order-2 md:order-3 text-left md:pl-8 mt-4 md:mt-0">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-teal-400 hover:shadow-md transition-all">
+                        <h3 class="text-xl font-bold text-teal-900 mb-2">2. Planificación (Enfermería)</h3>
+                        <p class="text-slate-600 text-sm">Se analizan las indicaciones y se organiza la administración: qué, en qué horario y en qué cantidad.</p>
+                        <div id="step2" class="expand-content pt-4 border-t border-slate-100">
+                            <ul class="text-sm text-slate-500 list-disc pl-4 space-y-1">
+                                <li>Si Enfermería no planifica, Farmacia no sabe qué preparar.</li>
+                                <li>Las cantidades dependen tanto de la indicación como de la organización de los turnos.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2 w-12 h-12 bg-teal-500 rounded-full flex items-center justify-center shadow-lg border-4 border-white shrink-0 z-10">
+                    <i data-lucide="clipboard-list" class="text-white w-6 h-6"></i>
+                </div>
+                <div class="md:w-5/12 w-full order-3 md:order-1 hidden md:block"></div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center justify-between w-full group cursor-pointer" onclick="toggleDetails('step3')">
+                <div class="md:w-5/12 w-full order-2 md:order-1 text-right md:pr-8 mt-4 md:mt-0">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-indigo-400 hover:shadow-md transition-all text-left md:text-right">
+                        <h3 class="text-xl font-bold text-indigo-900 mb-2">3. Generación del Pedido</h3>
+                        <p class="text-slate-600 text-sm">El sistema genera el requerimiento formal hacia la Farmacia.</p>
+                        <div id="step3" class="expand-content text-left pt-4 border-t border-slate-100">
+                            <ul class="text-sm text-slate-500 list-disc pl-4 space-y-1">
+                                <li>Un pedido representa una acción para Farmacia basada en una necesidad del paciente.</li>
+                                <li>Sin pedido formal, no hay preparación respaldada.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2 w-12 h-12 bg-indigo-500 rounded-full flex items-center justify-center shadow-lg border-4 border-white shrink-0 z-10">
+                    <i data-lucide="file-output" class="text-white w-6 h-6"></i>
+                </div>
+                <div class="md:w-5/12 w-full order-3 hidden md:block"></div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center justify-between w-full group cursor-pointer" onclick="toggleDetails('step4')">
+                <div class="md:w-5/12 w-full order-2 md:order-3 text-left md:pl-8 mt-4 md:mt-0">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-purple-400 hover:shadow-md transition-all">
+                        <h3 class="text-xl font-bold text-purple-900 mb-2">4. Preparación y Entrega</h3>
+                        <p class="text-slate-600 text-sm">Farmacia procesa el pedido, prepara las dosis y registra la salida.</p>
+                        <div id="step4" class="expand-content pt-4 border-t border-slate-100">
+                            <ul class="text-sm text-slate-500 list-disc pl-4 space-y-1">
+                                <li>"Procesar" significa registrar la preparación y entrega en el sistema.</li>
+                                <li>Esto descuenta el stock físico alineándolo con el informático.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2 w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center shadow-lg border-4 border-white shrink-0 z-10">
+                    <i data-lucide="package-check" class="text-white w-6 h-6"></i>
+                </div>
+                <div class="md:w-5/12 w-full order-3 md:order-1 hidden md:block"></div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center justify-between w-full group cursor-pointer" onclick="toggleDetails('step6')">
+                <div class="md:w-5/12 w-full order-2 md:order-1 text-right md:pr-8 mt-4 md:mt-0">
+                    <div class="bg-emerald-50 border-2 border-emerald-500 p-6 rounded-2xl shadow-md text-left md:text-right">
+                        <h3 class="text-xl font-bold text-emerald-900 mb-2">5. Administración al Paciente</h3>
+                        <p class="text-emerald-800 text-sm font-medium">Fin del circuito. Enfermería administra la medicación al paciente según lo planificado.</p>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2 w-14 h-14 bg-emerald-500 rounded-full flex items-center justify-center shadow-lg border-4 border-white shrink-0 z-10">
+                    <i data-lucide="user-check" class="text-white w-7 h-7"></i>
+                </div>
+                <div class="md:w-5/12 w-full order-3 hidden md:block"></div>
+            </div>
+        </div>
+    </main>
+
+    <section class="bg-slate-100 py-20 px-6 border-t border-slate-200">
+        <div class="max-w-6xl mx-auto">
+            
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-slate-800 mb-4">Preguntas de Análisis y Reflexión</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto">
+                    Repensar cada etapa nos ayuda a comprender por qué los procesos están diseñados de esta manera. Explorá las preguntas clave de cada etapa.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow" onclick="toggleReflexion('ref1', this)">
+                    <div class="p-6 flex items-center justify-between bg-blue-50/50">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="play-circle" class="text-blue-600 w-6 h-6"></i>
+                            <h3 class="font-bold text-slate-800">El inicio del circuito</h3>
+                        </div>
+                        <i data-lucide="chevron-down" class="text-slate-400 rotate-icon w-5 h-5"></i>
+                    </div>
+                    <div id="ref1" class="expand-content px-6 pb-6 text-sm text-slate-600 border-t border-slate-100">
+                        <ul class="list-disc pl-4 space-y-3 pt-4">
+                            <li>Si el médico indica un medicamento, ¿eso significa que Farmacia debe entregarlo inmediatamente? ¿Qué pasos ocurren entre una indicación y una entrega?</li>
+                            <li>¿Por qué el médico no solicita directamente los medicamentos a Farmacia?</li>
+                            <li>¿Qué función cumple Enfermería dentro del circuito? ¿Podría omitirse ese paso?</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow" onclick="toggleReflexion('ref2', this)">
+                    <div class="p-6 flex items-center justify-between bg-teal-50/50">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="calendar" class="text-teal-600 w-6 h-6"></i>
+                            <h3 class="font-bold text-slate-800">La planificación</h3>
+                        </div>
+                        <i data-lucide="chevron-down" class="text-slate-400 rotate-icon w-5 h-5"></i>
+                    </div>
+                    <div id="ref2" class="expand-content px-6 pb-6 text-sm text-slate-600 border-t border-slate-100">
+                        <ul class="list-disc pl-4 space-y-3 pt-4">
+                            <li>¿Qué ocurriría si Enfermería no planificara las administraciones?</li>
+                            <li>¿La cantidad de medicamentos depende únicamente de la indicación médica o también de cómo se organiza la administración?</li>
+                            <li>Si la planificación cambia, ¿cómo impacta ese cambio en Farmacia?</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow" onclick="toggleReflexion('ref3', this)">
+                    <div class="p-6 flex items-center justify-between bg-indigo-50/50">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="shopping-cart" class="text-indigo-600 w-6 h-6"></i>
+                            <h3 class="font-bold text-slate-800">Los pedidos</h3>
+                        </div>
+                        <i data-lucide="chevron-down" class="text-slate-400 rotate-icon w-5 h-5"></i>
+                    </div>
+                    <div id="ref3" class="expand-content px-6 pb-6 text-sm text-slate-600 border-t border-slate-100">
+                        <ul class="list-disc pl-4 space-y-3 pt-4">
+                            <li>¿Qué representa realmente un pedido? ¿Una necesidad del paciente o una acción de Farmacia?</li>
+                            <li>Si un pedido no existe, ¿significa necesariamente que el paciente no necesita medicación?</li>
+                            <li>¿Qué situaciones podrían hacer que un paciente necesite medicación y Farmacia no tenga un pedido pendiente?</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow" onclick="toggleReflexion('ref4', this)">
+                    <div class="p-6 flex items-center justify-between bg-purple-50/50">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="package" class="text-purple-600 w-6 h-6"></i>
+                            <h3 class="font-bold text-slate-800">La entrega</h3>
+                        </div>
+                        <i data-lucide="chevron-down" class="text-slate-400 rotate-icon w-5 h-5"></i>
+                    </div>
+                    <div id="ref4" class="expand-content px-6 pb-6 text-sm text-slate-600 border-t border-slate-100">
+                        <ul class="list-disc pl-4 space-y-3 pt-4">
+                            <li>¿Cuál es la diferencia entre entregar un medicamento y registrar que fue entregado?</li>
+                            <li>Si el medicamento llegó al paciente, ¿por qué sigue siendo importante registrarlo correctamente?</li>
+                            <li>¿Qué consecuencias podría tener una entrega incorrectamente registrada días o semanas después?</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow" onclick="toggleReflexion('ref5', this)">
+                    <div class="p-6 flex items-center justify-between bg-orange-50/50">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="git-commit" class="text-orange-600 w-6 h-6"></i>
+                            <h3 class="font-bold text-slate-800">La trazabilidad</h3>
+                        </div>
+                        <i data-lucide="chevron-down" class="text-slate-400 rotate-icon w-5 h-5"></i>
+                    </div>
+                    <div id="ref5" class="expand-content px-6 pb-6 text-sm text-slate-600 border-t border-slate-100">
+                        <ul class="list-disc pl-4 space-y-3 pt-4">
+                            <li>Si mañana hubiera que investigar quién recibió un medicamento, ¿cómo podría reconstruirse esa información?</li>
+                            <li>¿Qué riesgos existen cuando el stock del sistema no coincide con el stock físico?</li>
+                            <li>¿Qué información deja de existir cuando una entrega no queda registrada?</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow" onclick="toggleReflexion('ref6', this)">
+                    <div class="p-6 flex items-center justify-between bg-pink-50/50">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="users" class="text-pink-600 w-6 h-6"></i>
+                            <h3 class="font-bold text-slate-800">El trabajo en equipo</h3>
+                        </div>
+                        <i data-lucide="chevron-down" class="text-slate-400 rotate-icon w-5 h-5"></i>
+                    </div>
+                    <div id="ref6" class="expand-content px-6 pb-6 text-sm text-slate-600 border-t border-slate-100">
+                        <ul class="list-disc pl-4 space-y-3 pt-4">
+                            <li>¿Qué sucede si un sector realiza correctamente su trabajo pero otro no cumple con su parte del circuito?</li>
+                            <li>¿Puede Farmacia garantizar una buena atención trabajando de forma aislada?</li>
+                            <li>¿Por qué es importante comprender el trabajo del Médico y Enfermería aunque no pertenezcan a Farmacia?</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow" onclick="toggleReflexion('ref7', this)">
+                    <div class="p-6 flex items-center justify-between bg-yellow-50/50">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="boxes" class="text-yellow-600 w-6 h-6"></i>
+                            <h3 class="font-bold text-slate-800">El stock</h3>
+                        </div>
+                        <i data-lucide="chevron-down" class="text-slate-400 rotate-icon w-5 h-5"></i>
+                    </div>
+                    <div id="ref7" class="expand-content px-6 pb-6 text-sm text-slate-600 border-t border-slate-100">
+                        <ul class="list-disc pl-4 space-y-3 pt-4">
+                            <li>¿Un stock bajo siempre significa que hay que comprar?</li>
+                            <li>¿Qué información debería analizarse antes de decidir una compra?</li>
+                            <li>¿Qué problemas genera comprar de más? ¿Y comprar de menos?</li>
+                            <li>¿Qué diferencia existe entre tener disponibilidad y tener sobrestock?</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow" onclick="toggleReflexion('ref8', this)">
+                    <div class="p-6 flex items-center justify-between bg-green-50/50">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="credit-card" class="text-green-600 w-6 h-6"></i>
+                            <h3 class="font-bold text-slate-800">Las compras</h3>
+                        </div>
+                        <i data-lucide="chevron-down" class="text-slate-400 rotate-icon w-5 h-5"></i>
+                    </div>
+                    <div id="ref8" class="expand-content px-6 pb-6 text-sm text-slate-600 border-t border-slate-100">
+                        <ul class="list-disc pl-4 space-y-3 pt-4">
+                            <li>¿Por qué dos productos con el mismo stock pueden requerir decisiones de compra diferentes?</li>
+                            <li>¿Cómo influye el consumo histórico en una decisión de compra?</li>
+                            <li>¿Qué importancia tiene conocer cuándo llegará el próximo pedido del proveedor?</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow" onclick="toggleReflexion('ref9', this)">
+                    <div class="p-6 flex items-center justify-between bg-red-50/50">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="alert-triangle" class="text-red-600 w-6 h-6"></i>
+                            <h3 class="font-bold text-slate-800">Los errores</h3>
+                        </div>
+                        <i data-lucide="chevron-down" class="text-slate-400 rotate-icon w-5 h-5"></i>
+                    </div>
+                    <div id="ref9" class="expand-content px-6 pb-6 text-sm text-slate-600 border-t border-slate-100">
+                        <ul class="list-disc pl-4 space-y-3 pt-4">
+                            <li>Si detectamos un error de hace una semana, ¿es mejor modificar el pasado o dejar evidencia de la corrección?</li>
+                            <li>¿Por qué los sistemas suelen conservar el historial en lugar de permitir borrar registros?</li>
+                            <li>¿Qué aporta un historial completo frente a un historial "perfecto" pero modificado?</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow md:col-span-2 lg:col-span-3" onclick="toggleReflexion('ref10', this)">
+                    <div class="p-6 flex items-center justify-between bg-slate-100">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="network" class="text-slate-600 w-6 h-6"></i>
+                            <h3 class="font-bold text-slate-800">Pensando el proceso completo</h3>
+                        </div>
+                        <i data-lucide="chevron-down" class="text-slate-400 rotate-icon w-5 h-5"></i>
+                    </div>
+                    <div id="ref10" class="expand-content px-6 pb-6 text-sm text-slate-600 border-t border-slate-200">
+                        <div class="grid md:grid-cols-2 gap-4 pt-4">
+                            <ul class="list-disc pl-4 space-y-3">
+                                <li>¿Qué pasaría si Farmacia entregara medicamentos únicamente en función de la indicación médica, sin considerar la planificación de Enfermería?</li>
+                                <li>¿En qué momento deja de ser un proceso individual para convertirse en un proceso compartido?</li>
+                                <li>Si un paciente no recibe una medicación, ¿siempre la causa está en Farmacia o pudo originarse en otra etapa?</li>
+                            </ul>
+                            <ul class="list-disc pl-4 space-y-3">
+                                <li>¿Qué información necesita Farmacia para tomar buenas decisiones sin depender únicamente del sistema?</li>
+                                <li>¿Por qué es importante entender el proceso antes de aprender a utilizar el sistema?</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-16 bg-gradient-to-br from-blue-900 to-indigo-900 text-white p-8 md:p-12 rounded-3xl shadow-xl text-center relative overflow-hidden">
+                <i data-lucide="quote" class="absolute text-blue-800/30 w-32 h-32 -top-4 -left-4"></i>
+                <h3 class="text-2xl font-bold mb-6 relative z-10">Reflexión Final</h3>
+                <p class="text-lg md:text-xl leading-relaxed text-blue-50 relative z-10 max-w-4xl mx-auto font-light">
+                    Cada acción que realiza Farmacia forma parte de un circuito asistencial más amplio. Comprender cómo se relacionan el Médico, Enfermería y Farmacia permite entender que <strong class="font-bold text-white">el sistema informático es solo una herramienta</strong> para registrar y acompañar el proceso. El verdadero objetivo no es completar registros, sino garantizar que el paciente reciba el medicamento correcto, en la cantidad correcta y en el momento adecuado, manteniendo siempre la trazabilidad y la seguridad del proceso.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="bg-slate-900 text-slate-500 py-8 px-6 text-center text-sm border-t border-slate-800">
+        <p>Documentación Interna - Área de Farmacia e Internación</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Control del Flujo
+        function toggleDetails(id) {
+            const element = document.getElementById(id);
+            if (element.classList.contains('expanded')) {
+                element.classList.remove('expanded');
+            } else {
+                element.classList.add('expanded');
+            }
+        }
+
+        // Control de las Tarjetas de Reflexión
+        function toggleReflexion(id, cardElement) {
+            const element = document.getElementById(id);
+            
+            if (element.classList.contains('expanded')) {
+                element.classList.remove('expanded');
+                cardElement.classList.remove('expanded-card');
+            } else {
+                // Si querés que se cierre una al abrir otra, descomentá estas dos líneas:
+                // document.querySelectorAll('.expand-content').forEach(el => el.classList.remove('expanded'));
+                // document.querySelectorAll('.expanded-card').forEach(el => el.classList.remove('expanded-card'));
+                
+                element.classList.add('expanded');
+                cardElement.classList.add('expanded-card');
+            }
+        }
+    </script>
+</body>
+</html>

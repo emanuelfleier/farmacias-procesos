@@ -1,0 +1,65 @@
+DEVOLUCIONES
+PASOS ANTERIORES A REGISTRAR LA DEVOLUCION
+Nos llega una bolsa que en el exterior tiene colocado impreso el PMP que nosotros imprimimos a la hora de entregar los pedidos. A partir de ese PMP podemos ver el numero de paciente y el número de internación a quien le corresponde la devolución.
+Luego vamos a entrar al reporte de “movimiento ocupacional por paciente” para poder ver cuando fue el ingreso y egreso del paciente.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ahí podemos ver cuando ingreso y cuando egreso el paciente, fechas que vamos a necesitar para poder ver su consumo y entrega durante la internación. 
+
+Colocamos INT Y EL NUMERO DE INTERNACION, HACEMOS CLICK EN VISTA PREVIA 
+
+
+Nos aparecerá lo siguiente
+
+Por ejemplo podemos ver que ingreso el dia 22/09 y egreso el dia 29/09. 
+Con esos datos iremos al “reporte de stock por paciente” para poder ver lo que fue entregado por farmacia, lo que fue registrado como consumido y su diferencia si la hubiere. 
+
+
+
+
+
+
+Debemos completar con el numero de paciente y las fechas desde cuando hasta cuando estuvo internado, poner un día antes en el desde y un día después en el hasta para poder abarcar todo. 
+Nos aparecerá lo siguiente:
+
+En el primer caso quiere decir que entregamos un abbocath y enfermería registro que utilizo un abbocath, no esperaríamos encontrar ninguno en la bolsa de devolución. En caso de encontrar la devolución se realiza al paciente devoluciones.
+El segundo caso de agua bidestilada amp, es un error desde farmacia que no fue entregado algo que fue utilizado, no deberíamos encontrarnos con agua bidestilada en la bolsa pero en caso de encontrarla debemos registrar la devolución al paciente devoluciones.
+En el tercer caso que es aguja 25x 8 ev, entregamos 39 y ellos registraron que usaron 30, en la devolución esperamos encontrar 9. Si hay mas de 9 solo podemos registrar como devolución a este paciente 9, el resto irán al paciente devoluciones. Si hay menos de 9 registramos únicamente las que recibimos como devolución.
+ Así debemos ir haciendo con cada uno de los medicamentos o descartables que nos encontramos en la bolsa antes de hacer la devolución.
+
+¿Cómo registrar la devolución por sistema?
+
+
+
+
+
+
+
+
+
+Luego en la parte de abajo debemos ir cargando los medicamentos o descartables que corresponde su devolución con su respectiva cantidad y guardar.
+
+
+
+
+

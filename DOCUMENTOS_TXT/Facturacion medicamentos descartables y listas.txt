@@ -1,0 +1,27 @@
+En el sanatorio tenemos códigos genéricos y códigos de facturación. Se compra a través de códigos genéricos y  para ver con que código de facturación se facturan entramos a gestión sanatorial(maestros generales(medicamentos y descartables
+
+
+Nos aparecera la siguiente solapa en donde en tipo y codigo debemos completar V y poner el codigo generico
+
+Luego tocamos en solapa facturacion y nos aparecera el codigo con el que se factura dicho medicamento, ese codigo es de una marca comercial. 
+
+
+Luego con dicho codigo de facturacion puedo ver dentro de las distintas listas si se encuentra y como se esta facturando. 
+
+
+Pero a su vez puede que una obra social facture con una cierta marca comercial y otra con una diferente. Ese tipo de excepciones la podemos ver en relacion medicamento/descartable por insitucion. Ahí con el codigo generico podemos ver que codigo de facturacion se usa para las distintas obras sociales 
+
+PARA HACER UNA EXCEPCION POR VALORIZACION
+Lo usamos cuando una determinada obra social para la cual no tenemos lista quiere que facturemos a un precio diferente de las listas que usa normalmente
+Gestion sanatorial(parametros de valorizacion y cobertura( valorizacion( excepcion de valorizacion 
+
+
+Completamos el numero de la obra social para la cual vamos a hacer la excepcion
+En cuenta y profesional dejamos todos.
+Fecha de vigencia por lo menos un mes antes
+Tipo de codigo medicamentos y descartables
+Y colocamos el codigo de facturacion y agramos su valor 
+
+
+
+

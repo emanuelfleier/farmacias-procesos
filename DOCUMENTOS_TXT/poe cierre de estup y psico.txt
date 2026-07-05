@@ -1,0 +1,13 @@
+
+Procedimiento: Cierre de estupefacientes y psicotrópicos.
+Semanalmente contar, según planillas diarias, la cantidad de cada estupefaciente y psicotrópico entregado en la semana. (Verificar que las planillas estén firmadas y selladas por el médico). 
+Restar la cantidad sumada en 1 al stock que figura en el libro oficial. 
+Verificar que el stock físico y el stock real coincidan. En caso que no coincidan, rastrear donde puede estar el error, vale no pasado al libro, envases rotos, etc. 
+Realizar receta oficial, tener en cuenta que las cantidades deben escribirse en número y en letra, hacer firmar por dirección médica y pasar a los libros correspondientes. 
+A fin de mes, hacer cierre mensual: 
+Abrir Word (cierre estupefacientes) para completar planilla. 
+Completar por columnas: saldo anterior/entrada/salida/saldo a la fecha.
+Imprimir 2 copias.
+Firmar y sellar ambas copias. 
+Colocar las planillas de pedido diarias, las recetas oficiales y la planilla de cierre en un sobre.
+Llevar a inspección de farmacias. (Traer una de las planillas de cierre sellada por inspección y guardar en carpeta). 

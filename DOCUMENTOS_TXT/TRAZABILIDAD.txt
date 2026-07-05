@@ -1,0 +1,49 @@
+TRAZABILIDAD
+El Sistema Nacional de Trazabilidad (SNT) de Medicamentos es un sistema de información destinado a identificar en forma individual y unívoca cada una de las especialidades medicinales a ser comercializadas, como así también, efectuar su seguimiento a través de toda la cadena de distribución, desde su importación o elaboración hasta la dispensa a paciente.
+El flujo de datos que informa cada agente, es almacenado en una Base de Datos central; a su vez, el sistema posee la facultad de validar las transacciones informadas emitiendo un número de identificación ID por cada transacción exitosa. Esto permite mantener en todo momento una imagen fiel y completa de la distribución del producto.
+
+GLN: El número mundial de localización es la clave de identificación del Sistema GS1 singular a nivel mundial utilizada para identificar entidades legales y localizaciones físicas dentro de una entidad comercial u organizacional.
+ GTIN: Es el número de artículo comercial utilizado para la identificación inequívoca de artículos comerciales de todo el mundo. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Recepción de medicamentos - Confirmación de transacciones ( INGRESO DE MEDICAMENTO AL SANATORIO
+
+
+
+
+Se deberán hacer los informes en el SNT desde la solapa ‘Movimientos- Transacciones pendientes de confirmación’, se observa una pantalla con campos a completar que tienen la función de filtros (por fecha, por GLN origen, por N° de factura o remito, por GTIN, serie, etc.). Completando alguno de esos campos ya se obtienen las transacciones pendientes que respondan al filtro utilizado, se hace clic en los productos efectivamente recepcionados y se ‘confirma operación’
+
+Dispensa ( EGRESO AL PACIENTE
+Para informar dispensa de productos deberá seleccionar ‘Movimientos- Informar’, aparecerá la pantalla que está a continuación:
+
+
+• Fecha y hora de evento: los informes deberán ser a tiempo real por lo que se informa la fecha y hora en la que se produce la dispensa del producto. 
+• Evento: Se selecciona el tipo de evento ‘Dispensación de producto al paciente’
+ • Seleccionar medicamento único o masivo. Tener en cuenta que solo podrá informarse una dispensa masiva cuando se entrega más de un mismo medicamento al mismo paciente, el cual deberá contener mismo GTIN y series numéricas consecutivas; de lo contrario se realizan informes únicos. 
+• GTIN, se deberá colocar el número de catorce (14) caracteres numéricos que se encuentra a continuación del identificador de aplicación (01) en el soporte de trazabilidad. También se puede hacer búsqueda del GTIN por nombre del producto y luego seleccionar el que corresponde a la presentación a ser trazada. 
+• A continuación aparece el campo ‘cantidad’ el cual deberá quedar sin completar.- 
+• El campo serie debe completarse con el número de serie del producto a dispensar. Se debe respetar la totalidad de caracteres, las mayúsculas y minúsculas y los caracteres especiales. 
+• Al colocar estos dos campos, automáticamente se completa el campo lote y vencimiento el cual deberá coincidir con el producto que se va a dispensar.  
+• En GLN origen aparecerá automáticamente aquel que realiza la dispensa.
+ • Los campos número de remito y/o número de factura deben estar completos con la documentación que acompaña al producto. Podría reemplazarse factura por ticket de venta.
+En caso de que lo tengamos trazado a un paciente particular y contemos con el nombre y apellido lo completamos en la solapa de abajo, solo nombre y apellido.
+Luego aceptar, el SNT enviará una respuesta acompañado de un número de identificación de la transacción (ID de transacción). Dicho numero lo debemos anotar.
