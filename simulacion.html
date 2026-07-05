@@ -15,46 +15,73 @@
         .floor-transition {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        
+        /* Node glowing effects */
         .glow-blue {
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-            border-color: rgba(59, 130, 246, 0.8);
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.6);
+            border-color: rgba(59, 130, 246, 0.9) !important;
+            background: rgba(15, 23, 42, 0.95);
         }
         .glow-teal {
-            box-shadow: 0 0 20px rgba(20, 184, 166, 0.5);
-            border-color: rgba(20, 184, 166, 0.8);
+            box-shadow: 0 0 25px rgba(20, 184, 166, 0.6);
+            border-color: rgba(20, 184, 166, 0.9) !important;
+            background: rgba(15, 23, 42, 0.95);
         }
         .glow-indigo {
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
-            border-color: rgba(99, 102, 241, 0.8);
+            box-shadow: 0 0 25px rgba(99, 102, 241, 0.6);
+            border-color: rgba(99, 102, 241, 0.9) !important;
+            background: rgba(15, 23, 42, 0.95);
         }
         .glow-purple {
-            box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
-            border-color: rgba(168, 85, 247, 0.8);
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.6);
+            border-color: rgba(168, 85, 247, 0.9) !important;
+            background: rgba(15, 23, 42, 0.95);
         }
         .glow-emerald {
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
-            border-color: rgba(16, 185, 129, 0.8);
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.6);
+            border-color: rgba(16, 185, 129, 0.9) !important;
+            background: rgba(15, 23, 42, 0.95);
         }
+        
         .step-inactive {
-            opacity: 0.4;
+            opacity: 0.3;
             pointer-events: none;
-            filter: grayscale(80%);
+            filter: grayscale(90%);
         }
-        /* Floating animations */
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
+
+        /* SVG Paths animations */
+        @keyframes dash {
+            to {
+                stroke-dashoffset: -20;
+            }
         }
-        .float-anim {
-            animation: float 3s ease-in-out infinite;
+        .active-path {
+            stroke-dasharray: 6, 4;
+            animation: dash 0.8s linear infinite;
         }
-        /* Pulse for action highlights */
-        @keyframes pulse-border {
-            0%, 100% { border-color: rgba(59, 130, 246, 0.3); }
-            50% { border-color: rgba(59, 130, 246, 0.8); }
+
+        /* Ripple effect radiating outwards from active node */
+        @keyframes ripple {
+            0% { transform: scale(0.95); opacity: 0.6; }
+            100% { transform: scale(1.25); opacity: 0; }
         }
-        .pulse-active-step {
-            animation: pulse-border 2s infinite;
+        .ripple-active {
+            position: relative;
+        }
+        .ripple-active::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 1rem;
+            border: 2px solid currentColor;
+            animation: ripple 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Custom ease out back for bouncy packets */
+        .bouncy-transition {
+            transition: all 1.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
     </style>
 </head>
@@ -70,7 +97,7 @@
                 </div>
                 <div>
                     <h1 class="text-xl font-bold text-white tracking-wide">Simulador Interactivo de Internación</h1>
-                    <p class="text-xs text-slate-400">IPAM - Circuito de 5 Etapas del Medicamento</p>
+                    <p class="text-xs text-slate-400">IPAM - Simulación Avanzada de Circuito Físico y Digital</p>
                 </div>
             </div>
             <div class="flex items-center gap-4">
@@ -121,10 +148,24 @@
                 <!-- Interactive Map Grid Layout -->
                 <div class="relative w-full flex-1 min-h-[300px] z-10 my-4">
                     
-                    <!-- Circular Nodes (Hospital Departments) -->
+                    <!-- Permanent SVG Connection lines mapping flow pathways -->
+                    <svg class="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <!-- Line 1: Hab 304 -> Servidor (Indicación) -->
+                        <path id="svg-path-1" d="M 80,20 L 20,20" fill="none" stroke="#334155" stroke-width="1.5" stroke-dasharray="3,3" class="transition-all duration-500" />
+                        <!-- Line 2: Office -> Servidor (Planificación) -->
+                        <path id="svg-path-2" d="M 80,80 L 20,20" fill="none" stroke="#334155" stroke-width="1.5" stroke-dasharray="3,3" class="transition-all duration-500" />
+                        <!-- Line 3: Servidor -> Farmacia (Pedido Automático) -->
+                        <path id="svg-path-3" d="M 20,20 L 20,80" fill="none" stroke="#334155" stroke-width="1.5" stroke-dasharray="3,3" class="transition-all duration-500" />
+                        <!-- Line 4: Farmacia -> Office (Despacho Medicación) -->
+                        <path id="svg-path-4" d="M 20,80 L 80,80" fill="none" stroke="#334155" stroke-width="1.5" stroke-dasharray="3,3" class="transition-all duration-500" />
+                        <!-- Line 5: Office -> Hab 304 (Administración al Paciente) -->
+                        <path id="svg-path-5" d="M 80,80 L 80,20" fill="none" stroke="#334155" stroke-width="1.5" stroke-dasharray="3,3" class="transition-all duration-500" />
+                    </svg>
+                    
+                    <!-- Nodes (Absolute Positions) -->
                     
                     <!-- 1. Sistema Informático / Servidor (Top Left) -->
-                    <div id="node-sistema" class="absolute left-4 top-4 w-28 p-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all">
+                    <div id="node-sistema" class="absolute left-4 top-4 w-28 p-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all z-10">
                         <div class="w-8 h-8 rounded-xl bg-indigo-900/20 text-indigo-400 flex items-center justify-center">
                             <i data-lucide="database" class="w-4.5 h-4.5"></i>
                         </div>
@@ -133,8 +174,8 @@
                     </div>
 
                     <!-- 2. Habitación 304 (Top Right) -->
-                    <div id="node-hab304" class="absolute right-4 top-4 w-28 p-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all">
-                        <div class="w-8 h-8 rounded-xl bg-blue-900/20 text-blue-400 flex items-center justify-center">
+                    <div id="node-hab304" class="absolute right-4 top-4 w-28 p-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all z-10 ripple-active text-blue-500 glow-blue">
+                        <div class="w-8 h-8 rounded-xl bg-blue-900/20 text-blue-405 flex items-center justify-center">
                             <i data-lucide="bed-double" class="w-4.5 h-4.5"></i>
                         </div>
                         <span class="text-[9px] font-bold text-slate-200">Habitación 304</span>
@@ -142,7 +183,7 @@
                     </div>
 
                     <!-- 3. Office de Enfermería (Bottom Right) -->
-                    <div id="node-enfermeria" class="absolute right-4 bottom-4 w-28 p-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all">
+                    <div id="node-enfermeria" class="absolute right-4 bottom-4 w-28 p-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all z-10">
                         <div class="w-8 h-8 rounded-xl bg-teal-900/20 text-teal-400 flex items-center justify-center">
                             <i data-lucide="clipboard-list" class="w-4.5 h-4.5"></i>
                         </div>
@@ -151,7 +192,7 @@
                     </div>
 
                     <!-- 4. Farmacia Central (Bottom Left) -->
-                    <div id="node-farmacia" class="absolute left-4 bottom-4 w-28 p-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all">
+                    <div id="node-farmacia" class="absolute left-4 bottom-4 w-28 p-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all z-10">
                         <div class="w-8 h-8 rounded-xl bg-purple-900/20 text-purple-400 flex items-center justify-center">
                             <i data-lucide="package-check" class="w-4.5 h-4.5"></i>
                         </div>
@@ -159,8 +200,8 @@
                         <span id="node-farmacia-status" class="text-[7.5px] text-slate-500">En espera...</span>
                     </div>
 
-                    <!-- Floating Animated Data/Medication Packet -->
-                    <div id="anim-packet" class="absolute w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg transition-all duration-[1200ms] ease-in-out opacity-0 scale-0 z-20">
+                    <!-- Floating Animated Data/Medication Packet (Using custom bouncy transition class) -->
+                    <div id="anim-packet" class="absolute w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg bouncy-transition opacity-0 scale-0 z-20">
                         <i id="anim-packet-icon" data-lucide="file-text" class="w-4 h-4"></i>
                     </div>
 
@@ -179,7 +220,7 @@
         <!-- Right Column: Control Panel & Interactive Workflow Steps (7 cols) -->
         <section class="lg:col-span-7 space-y-6">
 
-            <!-- Step Progress Indicator (Exactly 5 steps matching theory guide) -->
+            <!-- Step Progress Indicator -->
             <div class="bg-slate-950/40 border border-slate-800 p-4 rounded-2xl flex items-center justify-between gap-1 overflow-x-auto">
                 <div id="prog-step1" class="flex items-center gap-1.5 shrink-0 text-blue-400 font-semibold text-xs">
                     <span class="w-5.5 h-5.5 rounded-full bg-blue-600/20 border border-blue-500 flex items-center justify-center text-[10px]">1</span>
@@ -218,7 +259,7 @@
                 <div id="step-panel-1" class="bg-slate-950 border border-slate-800 rounded-3xl p-6 space-y-6">
                     <div class="flex justify-between items-center">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-blue-600/10 text-blue-400 flex items-center justify-center">
+                            <div class="w-10 h-10 rounded-xl bg-blue-600/10 text-blue-400 flex items-center justify-center animate-pulse">
                                 <i data-lucide="stethoscope" class="w-5 h-5"></i>
                             </div>
                             <div>
@@ -226,7 +267,7 @@
                                 <p class="text-xs text-slate-400">El médico evalúa al paciente y registra la indicación</p>
                             </div>
                         </div>
-                        <span class="text-[10px] px-2.5 py-1 bg-blue-900/30 text-blue-400 border border-blue-800 rounded-full font-mono">Piso 3 • Hab 304</span>
+                        <span class="text-[10px] px-2.5 py-1 bg-blue-900/30 text-blue-400 border border-blue-800 rounded-full font-mono">Paso 1 de 5</span>
                     </div>
 
                     <div class="p-5 bg-slate-900/50 border border-slate-850 rounded-2xl space-y-4">
@@ -269,7 +310,7 @@
                                 <p class="text-xs text-slate-400">Definición de horarios para la administración</p>
                             </div>
                         </div>
-                        <span class="text-[10px] px-2.5 py-1 bg-teal-900/30 text-teal-400 border border-teal-800 rounded-full font-mono">Office Enfermería</span>
+                        <span class="text-[10px] px-2.5 py-1 bg-teal-900/30 text-teal-400 border border-teal-800 rounded-full font-mono">Paso 2 de 5</span>
                     </div>
 
                     <div class="p-5 bg-slate-900/50 border border-slate-850 rounded-2xl space-y-4">
@@ -304,7 +345,7 @@
                                 <p class="text-xs text-slate-400">El sistema genera el pedido formal automáticamente</p>
                             </div>
                         </div>
-                        <span class="text-[10px] px-2.5 py-1 bg-indigo-900/30 text-indigo-400 border border-indigo-800 rounded-full font-mono">Proceso del Sistema</span>
+                        <span class="text-[10px] px-2.5 py-1 bg-indigo-900/30 text-indigo-400 border border-indigo-800 rounded-full font-mono">Paso 3 de 5</span>
                     </div>
 
                     <div class="p-5 bg-slate-900/50 border border-slate-850 rounded-2xl space-y-4">
@@ -329,7 +370,7 @@
                 <div id="step-panel-4" class="bg-slate-950 border border-slate-800 rounded-3xl p-6 space-y-6 step-inactive hidden">
                     <div class="flex justify-between items-center">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-purple-600/10 text-purple-400 flex items-center justify-center">
+                            <div class="w-10 h-10 rounded-xl bg-purple-600/10 text-purple-400 flex items-center justify-center animate-bounce">
                                 <i data-lucide="package-check" class="w-5 h-5"></i>
                             </div>
                             <div>
@@ -337,7 +378,7 @@
                                 <p class="text-xs text-slate-400">Consolidación por barrido horario y despacho</p>
                             </div>
                         </div>
-                        <span class="text-[10px] px-2.5 py-1 bg-purple-900/30 text-purple-400 border border-purple-800 rounded-full font-mono">Farmacia Central</span>
+                        <span class="text-[10px] px-2.5 py-1 bg-purple-900/30 text-purple-400 border border-purple-800 rounded-full font-mono">Paso 4 de 5</span>
                     </div>
 
                     <div class="p-5 bg-slate-900/50 border border-slate-850 rounded-2xl space-y-4">
@@ -384,13 +425,13 @@
                                 <p class="text-xs text-slate-400">Verificación y registro al pie de cama</p>
                             </div>
                         </div>
-                        <span class="text-[10px] px-2.5 py-1 bg-emerald-900/30 text-emerald-400 border border-emerald-800 rounded-full font-mono">Habitación 304</span>
+                        <span class="text-[10px] px-2.5 py-1 bg-emerald-900/30 text-emerald-400 border border-emerald-800 rounded-full font-mono">Paso 5 de 5</span>
                     </div>
 
                     <div class="p-5 bg-slate-900/50 border border-slate-850 rounded-2xl space-y-4">
                         <div class="flex justify-between items-center bg-emerald-950/15 border border-emerald-900/40 p-4 rounded-xl text-xs">
                             <div class="flex items-center gap-3">
-                                <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 animate-pulse"></i>
+                                <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400"></i>
                                 <div>
                                     <span class="block font-bold text-white">Medicación Entregada por Farmacia</span>
                                     <span id="admin-med-summary" class="text-[11px] text-slate-400">Cargando...</span>
@@ -400,7 +441,7 @@
 
                         <div class="space-y-2 text-xs">
                             <div class="flex items-center gap-2 text-slate-400">
-                                <i data-lucide="circle" class="w-3.5 h-3.5 text-emerald-500 fill-emerald-500"></i>
+                                <i data-lucide="circle" class="w-3.5 h-3.5 text-emerald-500 fill-emerald-500 animate-ping"></i>
                                 <span>Paciente correcto: Juan Gómez</span>
                             </div>
                             <div class="flex items-center gap-2 text-slate-400">
@@ -493,7 +534,7 @@
             // Set initial state
             packet.style.left = `${startX}px`;
             packet.style.top = `${startY}px`;
-            packet.className = `absolute w-8 h-8 rounded-full ${colorClass} text-white flex items-center justify-center shadow-lg transition-all duration-[1200ms] ease-in-out opacity-100 scale-100 z-20`;
+            packet.className = `absolute w-8 h-8 rounded-full ${colorClass} text-white flex items-center justify-center shadow-lg bouncy-transition opacity-100 scale-100 z-20`;
             
             // Set packet icon
             const iconElement = document.getElementById("anim-packet-icon");
@@ -511,7 +552,23 @@
                 packet.style.opacity = "0";
                 packet.style.transform = "scale(0)";
                 if (callback) callback();
-            }, 1250);
+            }, 1300);
+        }
+
+        // Activate path lines with dash animation
+        function setPathActive(pathNumber, isActive) {
+            const path = document.getElementById(`svg-path-${pathNumber}`);
+            if (path) {
+                if (isActive) {
+                    path.setAttribute("stroke", "#3b82f6");
+                    path.setAttribute("stroke-width", "3");
+                    path.classList.add("active-path");
+                } else {
+                    path.setAttribute("stroke", "#334155");
+                    path.setAttribute("stroke-width", "1.5");
+                    path.classList.remove("active-path");
+                }
+            }
         }
 
         // STEP 1 Submit: Doctor prescribes
@@ -519,17 +576,16 @@
             selectedMed = document.getElementById("prescription-med").value;
             selectedFreq = document.getElementById("prescription-freq").value;
 
-            // Glow nodes to show activity
-            document.getElementById("node-hab304").classList.add("glow-blue");
-            document.getElementById("node-hab-status").innerText = "Indicación registrada";
-
+            // Set current path active
+            setPathActive(1, true);
             addBitacora(`Médico en Hab. 304 registró indicación de <strong class="text-blue-400">${selectedMed}</strong>.`);
             
             // Animate packet: Hab 304 -> Sistema
             animatePacket("node-hab304", "node-sistema", "file-text", "bg-blue-600", () => {
                 document.getElementById("node-sistema").classList.add("glow-indigo");
-                document.getElementById("node-sistema-status").innerText = "Receta en H.C.";
-                
+                document.getElementById("node-sistema-status").innerText = "Receta guardada";
+                setPathActive(1, false);
+
                 // Set summary in Step 2
                 document.getElementById("active-prescription-summary").innerText = `${selectedMed} - ${selectedFreq}`;
 
@@ -555,6 +611,12 @@
                     `;
                 });
 
+                // Update node classes
+                document.getElementById("node-hab304").className = "absolute right-4 top-4 w-28 p-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all z-10 text-emerald-500 glow-emerald";
+                document.getElementById("node-hab-status").innerText = "✓ Indicación registrada";
+                document.getElementById("node-enfermeria").className = "absolute right-4 bottom-4 w-28 p-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all z-10 ripple-active text-teal-500 glow-teal";
+                document.getElementById("node-enfermeria-status").innerText = "Planificando...";
+
                 document.getElementById("map-status-badge").innerText = "Paso 2: Planificación";
                 document.getElementById("map-status-badge").className = "text-[9px] px-2 py-0.5 rounded-full bg-teal-900/30 text-teal-400 border border-teal-800 font-mono";
 
@@ -578,14 +640,20 @@
                 return;
             }
 
+            setPathActive(2, true);
             addBitacora(`Enfermería planificó administración a las: <strong class="text-teal-400">${plannedTimes.join(', ')}</strong>.`);
             
             // Animate packet: Office -> Sistema
-            animatePacket("node-enfermeria", "node-sistema", "calendar", "bg-teal-600", () => {
+            animatePacket("node-enfermeria", "node-sistema", "calendar", "bg-teal-650", () => {
                 document.getElementById("node-sistema-status").innerText = "Planificación guardada";
+                setPathActive(2, false);
 
-                addBitacora(`Planificación horaria almacenada en el sistema.`);
+                addBitacora(`Planificación horaria almacenada en el Servidor.`);
                 document.getElementById("pedido-system-detail").innerText = `• Dosis programadas: ${plannedTimes.join(', ')}`;
+
+                document.getElementById("node-enfermeria").className = "absolute right-4 bottom-4 w-28 p-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all z-10 text-emerald-500 glow-emerald";
+                document.getElementById("node-enfermeria-status").innerText = "✓ Planificado";
+                document.getElementById("node-sistema").className = "absolute left-4 top-4 w-28 p-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all z-10 ripple-active text-indigo-500 glow-indigo";
 
                 document.getElementById("map-status-badge").innerText = "Paso 3: Generación de Pedido";
                 document.getElementById("map-status-badge").className = "text-[9px] px-2 py-0.5 rounded-full bg-indigo-900/30 text-indigo-400 border border-indigo-800 font-mono";
@@ -597,28 +665,23 @@
 
         // STEP 3 Submit: Automated Order Generation (System Node)
         function submitStep3() {
+            setPathActive(3, true);
             addBitacora(`Sistema generó automáticamente pedidos para las dosis del paciente.`);
 
             // Animate packet: Sistema -> Farmacia
-            animatePacket("node-sistema", "node-farmacia", "file-output", "bg-indigo-650", () => {
+            animatePacket("node-sistema", "node-farmacia", "file-output", "bg-indigo-600", () => {
                 document.getElementById("node-farmacia").classList.add("glow-purple");
                 document.getElementById("node-farmacia-status").innerText = "Pedidos recibidos";
+                setPathActive(3, false);
 
                 addBitacora(`Pedidos consolidados recibidos en la cola de Farmacia.`);
 
                 // Prepare pharmacy panel details
                 document.getElementById("pharmacy-med-name").innerText = selectedMed;
                 
-                // Initialize default barrido selection based on planned times
-                const firstPlannedHour = parseInt(plannedTimes[0].split(":")[0]);
-                const selectElement = document.getElementById("pharmacy-barrido");
-                if (firstPlannedHour >= 8 && firstPlannedHour <= 12) {
-                    selectElement.value = "08-12";
-                } else if (firstPlannedHour > 12 && firstPlannedHour <= 20) {
-                    selectElement.value = "12-20";
-                } else {
-                    selectElement.value = "20-08";
-                }
+                document.getElementById("node-sistema").className = "absolute left-4 top-4 w-28 p-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all z-10 text-emerald-500 glow-emerald";
+                document.getElementById("node-sistema-status").innerText = "✓ Pedidos generados";
+                document.getElementById("node-farmacia").className = "absolute left-4 bottom-4 w-28 p-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all z-10 ripple-active text-purple-500 glow-purple";
 
                 updateBarridoFilter();
 
@@ -630,55 +693,24 @@
             });
         }
 
-        // Filter planned times in Farmacia based on range
-        function updateBarridoFilter() {
-            const range = document.getElementById("pharmacy-barrido").value;
-            let filteredTimes = [];
-
-            plannedTimes.forEach(t => {
-                const hour = parseInt(t.split(":")[0]);
-                if (range === "08-12" && hour >= 8 && hour <= 12) {
-                    filteredTimes.push(t);
-                } else if (range === "12-20" && hour > 12 && hour <= 20) {
-                    filteredTimes.push(t);
-                } else if (range === "20-08" && (hour > 20 || hour < 8)) {
-                    filteredTimes.push(t);
-                }
-            });
-
-            const hoursSpan = document.getElementById("pharmacy-med-hours");
-            const resultMsg = document.getElementById("barrido-result-msg");
-            const btn = document.getElementById("btn-dispense");
-
-            if (filteredTimes.length > 0) {
-                hoursSpan.innerText = filteredTimes.join(", ");
-                hoursSpan.className = "text-purple-400 font-bold";
-                resultMsg.innerText = "✓ Pedidos de Enfermería consolidados para este barrido.";
-                resultMsg.className = "text-[10px] text-emerald-400 mt-1 block font-medium";
-                btn.disabled = false;
-                btn.className = "w-full py-3 bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg";
-            } else {
-                hoursSpan.innerText = "Ningún pedido planificado en este rango";
-                hoursSpan.className = "text-red-400 font-medium";
-                resultMsg.innerText = "⚠ No hay pedidos de Enfermería para este rango de barrido.";
-                resultMsg.className = "text-[10px] text-red-400 mt-1 block font-medium";
-                btn.disabled = true;
-                btn.className = "w-full py-3 bg-slate-800 text-slate-500 font-bold text-sm rounded-xl cursor-not-allowed flex items-center justify-center gap-2";
-            }
-        }
-
         // STEP 4 Submit: Pharmacist dispenses
         function submitStep4() {
             const rangeText = document.getElementById("pharmacy-barrido").options[document.getElementById("pharmacy-barrido").selectedIndex].text;
+            setPathActive(4, true);
             addBitacora(`Farmacia procesó el barrido de horarios: <strong class="text-purple-400">${rangeText}</strong>.`);
             addBitacora(`Medicamentos fraccionados y despachados al Office de Enfermería.`);
 
             // Animate packet: Farmacia -> Office
             animatePacket("node-farmacia", "node-enfermeria", "package", "bg-purple-600", () => {
                 document.getElementById("node-enfermeria-status").innerText = "Medicación en Office";
+                setPathActive(4, false);
                 
                 // Set admin panel details
                 document.getElementById("admin-med-summary").innerText = `${selectedMed} (${rangeText})`;
+
+                document.getElementById("node-farmacia").className = "absolute left-4 bottom-4 w-28 p-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all z-10 text-emerald-500 glow-emerald";
+                document.getElementById("node-farmacia-status").innerText = "✓ Entregado";
+                document.getElementById("node-enfermeria").className = "absolute right-4 bottom-4 w-28 p-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all z-10 ripple-active text-emerald-500 glow-emerald";
 
                 document.getElementById("map-status-badge").innerText = "Paso 5: Administración";
                 document.getElementById("map-status-badge").className = "text-[9px] px-2 py-0.5 rounded-full bg-emerald-900/30 text-emerald-400 border border-emerald-800 font-mono";
@@ -690,12 +722,14 @@
 
         // STEP 5 Submit: Nurse administers to patient
         function submitStep5() {
+            setPathActive(5, true);
             addBitacora(`Enfermero/a llevó la dosis al pie de cama en Habitación 304.`);
 
             // Animate packet: Office -> Hab 304
             animatePacket("node-enfermeria", "node-hab304", "user-check", "bg-emerald-600", () => {
-                document.getElementById("node-hab304").classList.add("glow-emerald");
+                document.getElementById("node-hab304").className = "absolute right-4 top-4 w-28 p-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all z-10 text-emerald-500 glow-emerald shadow-lg";
                 document.getElementById("node-hab-status").innerText = "Medicación Administrada";
+                setPathActive(5, false);
 
                 addBitacora(`Paciente correcto y dosis correcta verificado. Medicación administrada.`);
                 addBitacora(`Trazabilidad completada y registrada en el sistema.`);
@@ -703,6 +737,9 @@
                 // Hide Step 5, Show Success
                 document.getElementById("step-panel-5").classList.add("hidden");
                 document.getElementById("success-panel").classList.remove("hidden");
+
+                document.getElementById("node-enfermeria").className = "absolute right-4 bottom-4 w-28 p-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all z-10 text-emerald-500 glow-emerald";
+                document.getElementById("node-enfermeria-status").innerText = "✓ Administrado";
 
                 document.getElementById("map-status-badge").innerText = "Completado";
                 document.getElementById("map-status-badge").className = "text-[9px] px-2 py-0.5 rounded-full bg-emerald-600 text-white font-mono";
