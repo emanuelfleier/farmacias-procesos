@@ -269,8 +269,8 @@
                     </div>
 
                     <button onclick="submitStep2()" class="w-full py-3 bg-teal-600 hover:bg-teal-500 text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg">
-                        Generar Pedido para Farmacia
-                        <i data-lucide="file-text" class="w-4 h-4"></i>
+                        Guardar Planificación (El sistema generará los pedidos)
+                        <i data-lucide="check-circle" class="w-4 h-4"></i>
                     </button>
                 </div>
 
@@ -282,37 +282,41 @@
                                 <i data-lucide="package-check" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h3 class="text-md font-bold text-white">Estación de Farmacia: Dispensación</h3>
-                                <p class="text-xs text-slate-400">Preparación de dosis unitaria y despacho</p>
+                                <h3 class="text-md font-bold text-white">Estación de Farmacia: Barrido Horario</h3>
+                                <p class="text-xs text-slate-400">Farmacia define el rango de horarios para el despacho</p>
                             </div>
                         </div>
                         <span class="text-[10px] px-2.5 py-1 bg-purple-900/30 text-purple-400 border border-purple-800 rounded-full font-mono">Paso 3 de 4</span>
                     </div>
 
                     <div class="p-5 bg-slate-900/50 border border-slate-850 rounded-2xl space-y-4">
-                        <div class="flex justify-between items-center border-b border-slate-850 pb-3">
-                            <span class="text-xs font-semibold text-slate-400">Pedido Recibido</span>
-                            <span class="text-xs font-mono px-2 py-0.5 bg-slate-800 text-slate-300 rounded">ID Pedido: #F-9281</span>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1.5">Definir Rango de Horarios para Barrido</label>
+                            <select id="pharmacy-barrido" onchange="updateBarridoFilter()" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-white focus:border-purple-500 focus:outline-none">
+                                <option value="08-12">Barrido Mañana (08:00 hs a 12:00 hs)</option>
+                                <option value="12-20">Barrido Tarde (12:00 hs a 20:00 hs)</option>
+                                <option value="20-08">Barrido Noche (20:00 hs a 08:00 hs)</option>
+                            </select>
                         </div>
-                        
-                        <div class="space-y-2">
-                            <div class="flex justify-between text-xs">
-                                <span class="text-slate-400">Destino:</span>
-                                <span class="text-white font-medium">Piso 3 - Habitación 304</span>
-                            </div>
-                            <div class="flex justify-between text-xs">
-                                <span class="text-slate-400">Medicamento:</span>
-                                <span id="pharmacy-med-name" class="text-white font-medium">-</span>
-                            </div>
-                            <div class="flex justify-between text-xs">
-                                <span class="text-slate-400">Dosis planificadas:</span>
-                                <span id="pharmacy-med-hours" class="text-white font-medium">-</span>
+
+                        <div class="border-t border-slate-850 pt-3 space-y-2">
+                            <span class="text-[10px] font-bold text-purple-400 uppercase tracking-wider block">Pedidos de Cama 304 Consolidados</span>
+                            <div class="space-y-2 text-xs">
+                                <div class="flex justify-between">
+                                    <span class="text-slate-450">Medicamento:</span>
+                                    <span id="pharmacy-med-name" class="text-white font-medium">-</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-455">Dosis a preparar en este rango:</span>
+                                    <span id="pharmacy-med-hours" class="text-purple-400 font-bold">-</span>
+                                </div>
+                                <span id="barrido-result-msg" class="text-[10px] text-slate-500 mt-1 block"></span>
                             </div>
                         </div>
                     </div>
 
-                    <button onclick="submitStep3()" class="w-full py-3 bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg">
-                        Preparar y Despachar Dosis
+                    <button id="btn-dispense" onclick="submitStep3()" class="w-full py-3 bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg">
+                        Preparar y Despachar Dosis en Rango
                         <i data-lucide="truck" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -529,13 +533,25 @@
             // Animate packet: Office -> Farmacia
             animatePacket("node-enfermeria", "node-farmacia", "clipboard-list", "bg-teal-600", () => {
                 document.getElementById("node-farmacia").classList.add("glow-purple");
-                document.getElementById("node-farmacia-status").innerText = "Pedido recibido";
+                document.getElementById("node-farmacia-status").innerText = "Pedido Recibido (Automático)";
 
-                addBitacora(`Requerimiento oficial despachado a Farmacia Central.`);
+                addBitacora(`Sistema generó el pedido automáticamente basado en la planificación.`);
 
                 // Prepare pharmacy panel details
                 document.getElementById("pharmacy-med-name").innerText = selectedMed;
-                document.getElementById("pharmacy-med-hours").innerText = plannedTimes.join(', ');
+                
+                // Initialize default barrido selection based on planned times
+                const firstPlannedHour = parseInt(plannedTimes[0].split(":")[0]);
+                const selectElement = document.getElementById("pharmacy-barrido");
+                if (firstPlannedHour >= 8 && firstPlannedHour <= 12) {
+                    selectElement.value = "08-12";
+                } else if (firstPlannedHour > 12 && firstPlannedHour <= 20) {
+                    selectElement.value = "12-20";
+                } else {
+                    selectElement.value = "20-08";
+                }
+
+                updateBarridoFilter();
 
                 document.getElementById("map-status-badge").innerText = "Paso 3: Dispensación";
                 document.getElementById("map-status-badge").className = "text-[9px] px-2 py-0.5 rounded-full bg-purple-900/30 text-purple-400 border border-purple-800 font-mono";
@@ -545,16 +561,55 @@
             });
         }
 
+        // Filter planned times in Farmacia based on range
+        function updateBarridoFilter() {
+            const range = document.getElementById("pharmacy-barrido").value;
+            let filteredTimes = [];
+
+            plannedTimes.forEach(t => {
+                const hour = parseInt(t.split(":")[0]);
+                if (range === "08-12" && hour >= 8 && hour <= 12) {
+                    filteredTimes.push(t);
+                } else if (range === "12-20" && hour > 12 && hour <= 20) {
+                    filteredTimes.push(t);
+                } else if (range === "20-08" && (hour > 20 || hour < 8)) {
+                    filteredTimes.push(t);
+                }
+            });
+
+            const hoursSpan = document.getElementById("pharmacy-med-hours");
+            const resultMsg = document.getElementById("barrido-result-msg");
+            const btn = document.getElementById("btn-dispense");
+
+            if (filteredTimes.length > 0) {
+                hoursSpan.innerText = filteredTimes.join(", ");
+                hoursSpan.className = "text-purple-400 font-bold";
+                resultMsg.innerText = "✓ Pedidos incluidos en este barrido horario.";
+                resultMsg.className = "text-[10px] text-emerald-400 mt-1 block font-medium";
+                btn.disabled = false;
+                btn.className = "w-full py-3 bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg";
+            } else {
+                hoursSpan.innerText = "Ningún pedido planificado en este rango";
+                hoursSpan.className = "text-red-400 font-medium";
+                resultMsg.innerText = "⚠ No hay pedidos de Enfermería para este rango de barrido.";
+                resultMsg.className = "text-[10px] text-red-400 mt-1 block font-medium";
+                btn.disabled = true;
+                btn.className = "w-full py-3 bg-slate-800 text-slate-500 font-bold text-sm rounded-xl cursor-not-allowed flex items-center justify-center gap-2";
+            }
+        }
+
         // STEP 3 Submit: Pharmacist dispenses
         function submitStep3() {
-            addBitacora(`Farmacia validó la receta, fraccionó stock y despachó la dosis.`);
+            const rangeText = document.getElementById("pharmacy-barrido").options[document.getElementById("pharmacy-barrido").selectedIndex].text;
+            addBitacora(`Farmacia procesó el barrido de horarios: <strong class="text-purple-400">${rangeText}</strong>.`);
+            addBitacora(`Medicamentos fraccionados y despachados al Office de Enfermería.`);
 
             // Animate packet: Farmacia -> Office
             animatePacket("node-farmacia", "node-enfermeria", "package", "bg-purple-600", () => {
                 document.getElementById("node-enfermeria-status").innerText = "Medicación en Office";
                 
                 // Set admin panel details
-                document.getElementById("admin-med-summary").innerText = `${selectedMed} para las ${plannedTimes.join(', ')}`;
+                document.getElementById("admin-med-summary").innerText = `${selectedMed} (${rangeText})`;
 
                 document.getElementById("map-status-badge").innerText = "Paso 4: Administración";
                 document.getElementById("map-status-badge").className = "text-[9px] px-2 py-0.5 rounded-full bg-emerald-900/30 text-emerald-400 border border-emerald-800 font-mono";
