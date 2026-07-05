@@ -683,6 +683,17 @@
                 document.getElementById("node-sistema-status").innerText = "✓ Pedidos generados";
                 document.getElementById("node-farmacia").className = "absolute left-4 bottom-4 w-28 p-2.5 bg-slate-900/90 border border-slate-800 rounded-2xl flex flex-col items-center text-center gap-1 transition-all z-10 ripple-active text-purple-500 glow-purple";
 
+                // Initialize default barrido selection based on planned times
+                const firstPlannedHour = parseInt(plannedTimes[0].split(":")[0]);
+                const selectElement = document.getElementById("pharmacy-barrido");
+                if (firstPlannedHour >= 8 && firstPlannedHour <= 12) {
+                    selectElement.value = "08-12";
+                } else if (firstPlannedHour > 12 && firstPlannedHour <= 20) {
+                    selectElement.value = "12-20";
+                } else {
+                    selectElement.value = "20-08";
+                }
+
                 updateBarridoFilter();
 
                 document.getElementById("map-status-badge").innerText = "Paso 4: Preparación y Entrega";
@@ -691,6 +702,43 @@
                 // Transition UI
                 transitionStep(3, 4);
             });
+        }
+
+        // Filter planned times in Farmacia based on range
+        function updateBarridoFilter() {
+            const range = document.getElementById("pharmacy-barrido").value;
+            let filteredTimes = [];
+
+            plannedTimes.forEach(t => {
+                const hour = parseInt(t.split(":")[0]);
+                if (range === "08-12" && hour >= 8 && hour <= 12) {
+                    filteredTimes.push(t);
+                } else if (range === "12-20" && hour > 12 && hour <= 20) {
+                    filteredTimes.push(t);
+                } else if (range === "20-08" && (hour > 20 || hour < 8)) {
+                    filteredTimes.push(t);
+                }
+            });
+
+            const hoursSpan = document.getElementById("pharmacy-med-hours");
+            const resultMsg = document.getElementById("barrido-result-msg");
+            const btn = document.getElementById("btn-dispense");
+
+            if (filteredTimes.length > 0) {
+                hoursSpan.innerText = filteredTimes.join(", ");
+                hoursSpan.className = "text-purple-400 font-bold";
+                resultMsg.innerText = "✓ Pedidos de Enfermería consolidados para este barrido.";
+                resultMsg.className = "text-[10px] text-emerald-400 mt-1 block font-medium";
+                btn.disabled = false;
+                btn.className = "w-full py-3 bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg";
+            } else {
+                hoursSpan.innerText = "Ningún pedido planificado en este rango";
+                hoursSpan.className = "text-red-400 font-medium";
+                resultMsg.innerText = "⚠ No hay pedidos de Enfermería para este rango de barrido.";
+                resultMsg.className = "text-[10px] text-red-400 mt-1 block font-medium";
+                btn.disabled = true;
+                btn.className = "w-full py-3 bg-slate-800 text-slate-500 font-bold text-sm rounded-xl cursor-not-allowed flex items-center justify-center gap-2";
+            }
         }
 
         // STEP 4 Submit: Pharmacist dispenses
